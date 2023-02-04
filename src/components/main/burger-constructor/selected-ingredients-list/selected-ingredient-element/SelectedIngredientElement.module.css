@@ -1,0 +1,6 @@
+.selectedElement {
+    display: grid;
+    grid-template-columns: 24px auto;
+    gap: 8px;
+    align-items: center;
+}

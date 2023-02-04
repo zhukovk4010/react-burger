@@ -1,0 +1,20 @@
+.ingredients {
+    height: 756px;
+    overflow-x: scroll;
+}
+
+.ingredients::-webkit-scrollbar {
+    width: 8px;
+    height: 0;
+}
+
+.ingredients::-webkit-scrollbar-track {
+    background: #2F2F37;
+    border-radius: 5px;
+    height: 45vh;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border-radius: 5px;
+}
