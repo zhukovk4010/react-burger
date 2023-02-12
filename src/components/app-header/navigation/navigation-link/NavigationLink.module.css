@@ -3,10 +3,13 @@
 
     height: 56px;
 
+    padding: 16px 20px;
+
     display: grid;
     grid-template-columns: 24px auto;
     gap: 8px;
-    align-items: center;
     
+    align-items: center;
     border-radius: 40px;
 }
+

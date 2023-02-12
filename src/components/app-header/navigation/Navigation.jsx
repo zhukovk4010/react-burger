@@ -1,16 +1,25 @@
 //Компонент "Навигации", где можно переключатся между конструктором бургеров и лентой заказов
 
-import BurgerConstructorNavigationLink from './burger-contructor-navigation-link/BurgerConstructorNavigationLink';
-import OrderFeedNavigationLink from './order-feed-navigation-link/OrderFeedNavigationLink';
+import NavigationLink from './navigation-link/NavigationLink';
 
+import { TEXT_DEFAULT, TEXT_INACTIVE_COLOR } from '../../../utils/fontsStyles';
 import styles from './Navigation.module.css';
 
 
 const Navigation = () => {
     return (
         <nav className={styles.navigation}>
-            <BurgerConstructorNavigationLink />
-            <OrderFeedNavigationLink />
+            <NavigationLink 
+                styleTextButton={TEXT_DEFAULT}
+                type={'primary'} 
+                name={'Конструктор'} 
+            />
+            <NavigationLink 
+                styleTextButton={TEXT_DEFAULT} 
+                inActive={TEXT_INACTIVE_COLOR} 
+                type={'secondary'} 
+                name={'Лента заказов'} 
+            />
         </nav>
     );
 }

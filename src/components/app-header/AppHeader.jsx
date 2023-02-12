@@ -2,8 +2,8 @@
 
 import Navigation from './navigation/Navigation';
 import PersonalAreaNavigationLink from './personal-area-navigation-link/PersonalAreaNavigationLink';
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './AppHeader.module.css';
 
 

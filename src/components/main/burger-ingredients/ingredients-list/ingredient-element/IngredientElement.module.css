@@ -24,6 +24,8 @@
 
     display: grid;
     grid-template-columns: auto 24px;
+    gap: 8px;
+    justify-items: center;
 }
 
 .nameContainer {

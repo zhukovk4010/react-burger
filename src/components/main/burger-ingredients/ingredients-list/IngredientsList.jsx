@@ -1,65 +1,93 @@
 //Компонент списка ингредиентов 
 //Общий список данных разделяется на 3 категории по типу
 //Затем данные в зависемости от типа попадуют в нужный компонент и отрисовываются
+//При клике на ингредиет выпадает модальное окно с детальным описанием
 
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 
-import BunsList from './buns-list/BunsList';
-import FillingsList from './fillings-list/FillingsList';
-import SaucesList from './sauces-list/SaucesList';
+import { ingredientType } from '../../../../utils/types';
 
+import Modal from '../../../modals/Modal';
+import IngredientDetails from './ingredient-details/IngredientDetails';
+import BurgerElement from './ingredient-element/IngredientElement';
+
+import { TEXT_MEDIUM } from '../../../../utils/fontsStyles';
 import styles from './IngredientsList.module.css';
+
+
+
+//Переменная в которую попадают пропсы выбранного элемента, затем передаются в компонент IngredientDetails
+let selectedElementInfo = {};
 
 
 const IngredientsList = props => {
 
-    let bunsData = [];
-    let saucesData = [];
-    let fillingsData = [];
+    const bunsData = [];
+    const saucesData = [];
+    const fillingsData = [];
+
+    const [openModal, setOpenModal] = useState(false);
+
+
+    //При openModal == true, отрисовывается содержимое переменной
+    //Передаем в модальное окно функцию onClose, которая будет закрывать модальное окно
+    let modal = (
+        <Modal open={openModal} onClose={() => setOpenModal(false)} title='Детали ингредиента'>
+            <IngredientDetails element={selectedElementInfo}  />
+        </Modal>
+    )
+
+    //Функция которая передается через пропс в каждый элемент. По нажатию на элемент данные из API выбарнного элемента
+    //помещаются в переменную selectedElementInfo, а openModal изменяется на true и происходит отрисовка модального окна
+    const openSelectedElementModal = (selectedElement) => {
+        selectedElementInfo = selectedElement;
+        setOpenModal(true);
+    }
 
 
     //Разделение ингредиентов по типу
 
-    for (let i = 0; i < props.data.length; i++) {
+    for (let i = 0; i < props.ingredientsData.length; i++) {
 
-        if (props.data[i].type === 'bun') {
-            bunsData.push(props.data[i]);
-        } else if (props.data[i].type === 'sauce') {
-            saucesData.push(props.data[i]);
+        if (props.ingredientsData[i].type === 'bun') {
+            bunsData.push(props.ingredientsData[i]);
+        } else if (props.ingredientsData[i].type === 'sauce') {
+            saucesData.push(props.ingredientsData[i]);
         } else {
-            fillingsData.push(props.data[i])
+            fillingsData.push(props.ingredientsData[i])
         }
 
     }
 
     return (
         <section className={`mt-10 ${styles.ingredients}`}>
-            <h3 className='text text_type_main-medium'>Булки</h3>
-            <BunsList key={bunsData.id} bunsData={bunsData} />
-            <h3 className='text text_type_main-medium'>Соусы</h3>
-            <SaucesList saucesData={saucesData} />
-            <h3 className='text text_type_main-medium'>Начинки</h3>
-            <FillingsList fillingsData={fillingsData} />
+            <h3 className={TEXT_MEDIUM}>Булки</h3>
+            {bunsData.map((element) => {
+                return (
+                    <BurgerElement key={element._id} element={element} openModal={openSelectedElementModal} />
+                )
+            })}
+            <h3 className={TEXT_MEDIUM}>Соусы</h3>
+            {saucesData.map((element) => {
+                return (
+                    <BurgerElement key={element._id} element={element} openModal={openSelectedElementModal}/>
+                )
+            })}
+            <h3 className={TEXT_MEDIUM}>Начинки</h3>
+            {fillingsData.map((element) => {
+                return (
+                    <BurgerElement key={element._id} element={element} openModal={openSelectedElementModal}/>
+                )
+            })}
+            {modal}
         </section>
     );
 }
 
-IngredientsList.propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.string.isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        __v: PropTypes.number.isRequired,
-    })).isRequired
-}
+//Проверка данных приходящих из API
+IngredientsList.propTypes = ingredientType;
+
+
 
 
 export default IngredientsList;

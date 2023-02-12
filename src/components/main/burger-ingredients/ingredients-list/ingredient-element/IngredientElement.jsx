@@ -1,34 +1,31 @@
 //Компонента, которая принимает данные ингридиента и возвращает отрисованный объект
 
-import PropTypes from 'prop-types';
-
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TEXT_DEFAULT } from '../../../../../utils/fontsStyles';
+import styles from './IngredientElement.module.css';
 
-import styles from './BurgerElement.module.css';
 
+//При клике открыется модальное окно
 
 const BurgerElement = props => {
     return (
-        <div className={styles.ingredientsElement}>
+        <div onClick={() => {
+            props.openModal(props.element)
+        }} className={styles.ingredientsElement}>
             <Counter count={1} size="default" extraClass="m-1" />
             <div className={styles.imageContainer}>
-                <img src={props.image} alt={props.name} />
+                <img src={props.element.image} alt={props.element.name} />
             </div>
             <div className={styles.priceContainer}>
-                <h4 className="text text_type_main-default">{props.price}</h4>
+                <h4 className={TEXT_DEFAULT}>{props.element.price}</h4>
                 <CurrencyIcon type="primary" />
             </div>
             <div className={styles.nameContainer}>
-                <h4 className='text text_type_main-default'>{props.name}</h4>
+                <h4 className={TEXT_DEFAULT}>{props.element.name}</h4>
             </div>
         </div>
     );
 }
 
-BurgerElement.propTypes = {
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-}
 
 export default BurgerElement;
