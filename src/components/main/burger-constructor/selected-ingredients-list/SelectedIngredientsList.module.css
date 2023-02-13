@@ -6,7 +6,7 @@
 
 .changingIngredients {
     max-height: 440px;
-    overflow-x: scroll;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     gap: 10px;

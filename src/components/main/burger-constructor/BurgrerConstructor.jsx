@@ -1,6 +1,9 @@
 //Компонента конструктора бургеров
 //В ней содержится список выбранных ингредиентов и итоговая информацияы
 
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../../utils/types';
+
 import Information from "./information/Information";
 import SelectedIngredientsList from "./selected-ingredients-list/SelectedIngredientsList";
 
@@ -12,6 +15,10 @@ const BurgerConstructor = props => {
             <Information />
         </section>
     );
+}
+
+BurgerConstructor.propTypes = {
+    ingredientsData: PropTypes.arrayOf(ingredientType).isRequired
 }
 
 

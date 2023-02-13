@@ -1,3 +1,5 @@
+import { ingredientType } from '../../../../../utils/types';
+
 import { DIGITS_DEFAULT, TEXT_DEFAULT, TEXT_INACTIVE_COLOR, TEXT_MEDIUM } from '../../../../../utils/fontsStyles';
 import styles from './IngredientDetails.module.css';
 
@@ -30,6 +32,10 @@ const IngredientDetails = props => {
             </div>
         </section>
     )
+}
+
+IngredientDetails.propTypes = {
+    element: ingredientType,
 }
 
 

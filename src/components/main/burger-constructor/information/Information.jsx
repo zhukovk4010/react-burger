@@ -17,10 +17,15 @@ const Information = () => {
 
     //При openModal == true, отрисовывается содержимое переменной
     //Передаем в модальное окно функцию onClose, которая будет закрывать модальное окно
-    let modal = (
-        <Modal open={openModal} onClose={() => setOpenModal(false)}>
-            <OrderDetails />
-        </Modal>
+    const modal = (
+        <>
+            {openModal && (
+                <Modal open={openModal} onClose={() => setOpenModal(false)}>
+                    <OrderDetails />
+                </Modal>
+            )}
+        </>
+
     )
 
     return (
@@ -34,7 +39,7 @@ const Information = () => {
             <Button htmlType="button" type="primary" size="medium" onClick={() => setOpenModal(true)}>
                 Нажми на меня
             </Button>
-            {modal}         
+            {modal}
         </section>
     );
 }

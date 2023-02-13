@@ -17,22 +17,33 @@ const App = () => {
 		const getIngredientsData = async () => {
 
 			setState({ ...state, isLoading: true, hasError: false });
-			
+
 			try {
 				const res = await fetch(URL);
-				const data = await res.json();
-				setState({ ingredientsData: data.data, isLoading: false, hasError: false })
+				if (res.ok) {
+					const data = await res.json();
+					setState({ ingredientsData: data.data, isLoading: false, hasError: false })
+				} else {
+					setState({...state, isLoading: false, hasError: true})
+					return Promise.reject(`Ошибка ${res.status}`);
+				}
 			} catch (error) {
 				setState({ ingredientsData: [], isLoading: false, hasError: true })
-				console.log('Возникла ошибка:', error)
+				console.error('Ошибка:', error)
 			}
 		}
 		getIngredientsData();
 	}, [])
 
+	if (state.hasError === true) {
+		return (
+			<h1>Произошла ошибка, перезагрузите страницу</h1>
+		)
+	}
+
 	if (state.isLoading === true) {
 		return (
-			<h1>Возникла ошибка, перезагрузите страницу</h1>
+			<h1>Идет загрузка страницы</h1>
 		)
 	}
 

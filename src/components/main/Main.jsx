@@ -1,6 +1,9 @@
 //Компонент с основным содержанием, в котором содержится 2 секции 
 // с ингридиентами для бургера и выбраннами ингредиентами
 
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../utils/types';
+
 import BurgerConstructor from './burger-constructor/BurgrerConstructor';
 import BurgerIngredients from './burger-ingredients/BurgerIngredients';
 
@@ -14,6 +17,10 @@ const Main = props => {
             <BurgerConstructor ingredientsData={props.ingredientsData} />
         </main>
     );
+}
+
+Main.propTypes = {
+    ingredientsData: PropTypes.arrayOf(ingredientType).isRequired
 }
 
 

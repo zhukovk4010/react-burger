@@ -5,6 +5,7 @@
 
 import { useState } from 'react';
 
+import PropTypes from 'prop-types';
 import { ingredientType } from '../../../../utils/types';
 
 import Modal from '../../../modals/Modal';
@@ -15,11 +16,6 @@ import { TEXT_MEDIUM } from '../../../../utils/fontsStyles';
 import styles from './IngredientsList.module.css';
 
 
-
-//Переменная в которую попадают пропсы выбранного элемента, затем передаются в компонент IngredientDetails
-let selectedElementInfo = {};
-
-
 const IngredientsList = props => {
 
     const bunsData = [];
@@ -28,25 +24,29 @@ const IngredientsList = props => {
 
     const [openModal, setOpenModal] = useState(false);
 
+    //Информация о выбранном ингредиенте, которая уходит в пропсы компоненту IngredientDetails
+    const [selectedElementInfo, setSecletedElementInfo] = useState();
 
     //При openModal == true, отрисовывается содержимое переменной
     //Передаем в модальное окно функцию onClose, которая будет закрывать модальное окно
-    let modal = (
-        <Modal open={openModal} onClose={() => setOpenModal(false)} title='Детали ингредиента'>
-            <IngredientDetails element={selectedElementInfo}  />
-        </Modal>
+    const modal = (
+        <>
+            {openModal && (<Modal onClose={() => setOpenModal(false)} title='Детали ингредиента'>
+                <IngredientDetails element={selectedElementInfo} />
+            </Modal>)}
+        </>
+
     )
 
     //Функция которая передается через пропс в каждый элемент. По нажатию на элемент данные из API выбарнного элемента
     //помещаются в переменную selectedElementInfo, а openModal изменяется на true и происходит отрисовка модального окна
     const openSelectedElementModal = (selectedElement) => {
-        selectedElementInfo = selectedElement;
+        setSecletedElementInfo(selectedElement);
         setOpenModal(true);
     }
 
 
     //Разделение ингредиентов по типу
-
     for (let i = 0; i < props.ingredientsData.length; i++) {
 
         if (props.ingredientsData[i].type === 'bun') {
@@ -70,13 +70,13 @@ const IngredientsList = props => {
             <h3 className={TEXT_MEDIUM}>Соусы</h3>
             {saucesData.map((element) => {
                 return (
-                    <BurgerElement key={element._id} element={element} openModal={openSelectedElementModal}/>
+                    <BurgerElement key={element._id} element={element} openModal={openSelectedElementModal} />
                 )
             })}
             <h3 className={TEXT_MEDIUM}>Начинки</h3>
             {fillingsData.map((element) => {
                 return (
-                    <BurgerElement key={element._id} element={element} openModal={openSelectedElementModal}/>
+                    <BurgerElement key={element._id} element={element} openModal={openSelectedElementModal} />
                 )
             })}
             {modal}
@@ -85,9 +85,9 @@ const IngredientsList = props => {
 }
 
 //Проверка данных приходящих из API
-IngredientsList.propTypes = ingredientType;
-
-
+IngredientsList.propTypes = {
+    ingredientsData: PropTypes.arrayOf(ingredientType).isRequired,
+}
 
 
 export default IngredientsList;

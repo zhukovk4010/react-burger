@@ -3,6 +3,7 @@
 
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
+import PropTypes from 'prop-types';
 
 import ModalOverlay from "./ModalOverlay";
 
@@ -14,21 +15,18 @@ import styles from './Modal.module.css';
 const modalRoot = document.getElementById('react-modals');
 
 
-const Modal = ({ open, onClose, children, title }) => {
+const Modal = ({ onClose, children, title }) => {
 
     //Закрытие модального окна через Escape
     useEffect(() => {
-        const close = (e) => {
-            if (e.keyCode === 27) {
-                onClose()
+        const handleEscape = (e) => {
+            if (e.key == 'Escape') { 
+                onClose();
             }
         }
-        window.addEventListener('keydown', close)
-        return () => window.removeEventListener('keydown', close)
-    }, [])
-
-
-    if (!open) return null;
+        window.addEventListener('keydown', handleEscape);
+        return () => window.removeEventListener('keydown', handleEscape);
+    },[])
 
     
     return createPortal(
@@ -50,6 +48,13 @@ const Modal = ({ open, onClose, children, title }) => {
         modalRoot
     )
 }
+
+Modal.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired,
+    title: PropTypes.string,
+}
+
 
 
 export default Modal;

@@ -1,6 +1,6 @@
 .ingredients {
     height: 756px;
-    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 .ingredients::-webkit-scrollbar {

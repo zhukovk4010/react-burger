@@ -1,5 +1,8 @@
 //Компонента, которая принимает данные ингридиента и возвращает отрисованный объект
 
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../../../../utils/types';
+
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TEXT_DEFAULT } from '../../../../../utils/fontsStyles';
 import styles from './IngredientElement.module.css';
@@ -25,6 +28,11 @@ const BurgerElement = props => {
             </div>
         </div>
     );
+}
+
+BurgerElement.propTypes = {
+    element: ingredientType,
+    openModal: PropTypes.func.isRequired,
 }
 
 

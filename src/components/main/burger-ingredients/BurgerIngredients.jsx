@@ -1,5 +1,8 @@
 //Компонент ингридиентов бургера, в этой секции расположены переключатели и список ингридиентов
 
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../../utils/types';
+
 import IngredientsList from './ingredients-list/IngredientsList';
 import Tabs from './tabs/Tabs';
 
@@ -14,6 +17,10 @@ const BurgerIngredients = props => {
             <IngredientsList ingredientsData={props.ingredientsData} />
         </section>
     );
+}
+
+BurgerIngredients.propTypes = {
+    ingredientsData: PropTypes.arrayOf(ingredientType).isRequired
 }
 
 

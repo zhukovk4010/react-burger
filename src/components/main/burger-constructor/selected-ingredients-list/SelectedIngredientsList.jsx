@@ -2,7 +2,8 @@
 //Верхняя и нижняя булки закреплены
 //Ингредиенты по середине могут быть в разном количестве
 
-import {ingredientType} from '../../../../utils/types'
+import PropTypes from 'prop-types';
+import {ingredientType} from '../../../../utils/types';
 
 import SelectedIngredientElement from "./selected-ingredient-element/SelectedIngedientElement";
 
@@ -13,9 +14,12 @@ import styles from './SelectedIngredientsList.module.css';
 const SelectedIngredientsList = props => {
 
     const selectedElements = props.ingredientsData.map((element, index) => {
-        return (
-            <SelectedIngredientElement key={index} selectedElement={element} />
-        )
+        if (element.type != 'bun') {
+            return (
+                <SelectedIngredientElement key={index} selectedElement={element} />
+            )
+        }
+        
     })
 
     return (
@@ -50,7 +54,9 @@ const SelectedIngredientsList = props => {
 }
 
 //Проверка данных из API
-SelectedIngredientsList.propTypes = ingredientType;
+SelectedIngredientsList.propTypes = {
+    ingredientsData: PropTypes.arrayOf(ingredientType).isRequired,
+}
 
 
 export default SelectedIngredientsList;
