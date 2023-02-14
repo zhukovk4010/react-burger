@@ -24,7 +24,6 @@ const App = () => {
 					const data = await res.json();
 					setState({ ingredientsData: data.data, isLoading: false, hasError: false })
 				} else {
-					setState({...state, isLoading: false, hasError: true})
 					return Promise.reject(`Ошибка ${res.status}`);
 				}
 			} catch (error) {
