@@ -1,0 +1,14 @@
+.button {
+    box-sizing: border-box;
+
+    width: 207px;
+    height: 56px;
+
+    display: grid;
+    grid-template-columns: 24px auto;
+    gap: 8px;
+    justify-self: end;
+    align-items: center;
+    
+    border-radius: 40px;    
+}

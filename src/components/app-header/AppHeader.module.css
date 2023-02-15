@@ -1,0 +1,19 @@
+.headerContainer {
+    background: #1C1C21
+}
+
+.header {
+    height: 88px;
+    width: 1280px;
+    
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+}
+
+.logoContainer {
+    display: grid;
+    justify-self: center;
+}

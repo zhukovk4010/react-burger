@@ -1,0 +1,25 @@
+.information {
+    height: 64px;
+    display: grid;
+    grid-template-columns: auto 215px;
+    gap: 40px;
+    justify-items: end;
+}
+
+.totalPrice {
+    display: grid;
+    grid-template-columns: auto 33px;
+    align-items: center;
+    gap: 10px;
+    justify-items: end;
+}
+
+.icon {
+    width: 36px;
+    height: 36px;
+}
+
+.icon svg {
+    width: 36px;
+    height: 36px;
+}

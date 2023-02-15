@@ -1,0 +1,39 @@
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+    display: block;
+    width: 720px;
+    height: auto;
+    border-radius: 40px;
+    background: #1C1C21;
+    
+}
+
+.titleAndButton {
+    height: 64px;
+    margin: 40px 40px 0 40px;
+    display: grid;
+    grid-template-columns: 580px auto;
+}
+
+.title {
+    display: grid;
+    align-self: center;
+}
+
+.buttonClose {
+    display: grid;
+    justify-self: end;
+    align-self: center;
+    align-content: center;
+    justify-content: center;
+    height: 24px;
+    width: 24px;
+    background: none;
+    border: none;
+}
+
+
