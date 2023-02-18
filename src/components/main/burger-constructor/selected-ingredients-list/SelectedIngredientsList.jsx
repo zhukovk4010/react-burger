@@ -2,8 +2,9 @@
 //Верхняя и нижняя булки закреплены
 //Ингредиенты по середине могут быть в разном количестве
 
-import PropTypes from 'prop-types';
-import {ingredientType} from '../../../../utils/types';
+import { useContext, useEffect } from 'react';
+
+import { IngredientsContext } from '../../../../utils/context';
 
 import SelectedIngredientElement from "./selected-ingredient-element/SelectedIngedientElement";
 
@@ -11,16 +12,24 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import styles from './SelectedIngredientsList.module.css';
 
 
-const SelectedIngredientsList = props => {
+const SelectedIngredientsList = () => {
 
-    const selectedElements = props.ingredientsData.map((element, index) => {
-        if (element.type != 'bun') {
-            return (
-                <SelectedIngredientElement key={index} selectedElement={element} />
-            )
-        }
-        
-    })
+    //Получаем данные ингредиентов через контекс
+    const { state, dispatch } = useContext(IngredientsContext);
+
+    //Добавление ингредиентов в конструктор
+    //При разном количестве изменяется цена
+    //Если повторно добавить ингредиент булки, то он перезапишет старое значение, а из итоговой цены вычетаются
+    //предыдущие значения цен на булки и добавляются новые
+    useEffect(() => {
+        dispatch({ type: 'addSelectedIngredient', ingredient: state.ingredients[0] });
+        dispatch({ type: 'addSelectedIngredient', ingredient: state.ingredients[2] });
+        dispatch({ type: 'addSelectedIngredient', ingredient: state.ingredients[3] });
+        dispatch({ type: 'addSelectedIngredient', ingredient: state.ingredients[4] });
+        dispatch({ type: 'addSelectedIngredient', ingredient: state.ingredients[8] });
+        dispatch({ type: 'addSelectedIngredient', ingredient: state.ingredients[6] });
+    }, [])
+
 
     return (
         <section className={styles.selectedElements}>
@@ -29,33 +38,32 @@ const SelectedIngredientsList = props => {
                 <ConstructorElement
                     type="top"
                     isLocked={true}
-                    text="Краторная булка N-200i (верх)"
-                    price={200}
-                    thumbnail={props.ingredientsData[0].image_mobile}
+                    text={`${state.selectedIngredients.bun.name} (верх)`}
+                    price={state.selectedIngredients.bun.price}
+                    thumbnail={state.selectedIngredients.bun.image_mobile}
                 />
             </div>
 
 
             <div className={styles.changingIngredients}>
-                {selectedElements}
+                {state.selectedIngredients.otherIngredients.map((element) => {
+                    return (
+                        <SelectedIngredientElement key={element._id} selectedElement={element} />
+                    )
+                })}
             </div>
 
             <div className='ml-8'>
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
-                    text="Краторная булка N-200i (верх)"
-                    price={200}
-                    thumbnail={props.ingredientsData[0].image_mobile}
+                    text={`${state.selectedIngredients.bun.name} (низ)`}
+                    price={state.selectedIngredients.bun.price}
+                    thumbnail={state.selectedIngredients.bun.image_mobile}
                 />
             </div>
         </section>
     );
-}
-
-//Проверка данных из API
-SelectedIngredientsList.propTypes = {
-    ingredientsData: PropTypes.arrayOf(ingredientType).isRequired,
 }
 
 
