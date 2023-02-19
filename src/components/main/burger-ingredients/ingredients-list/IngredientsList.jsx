@@ -3,10 +3,9 @@
 //Затем данные в зависемости от типа попадуют в нужный компонент и отрисовываются
 //При клике на ингредиет выпадает модальное окно с детальным описанием
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../../../utils/types';
+import { IngredientsContext } from '../../../../utils/context';
 
 import Modal from '../../../modals/Modal';
 import IngredientDetails from './ingredient-details/IngredientDetails';
@@ -16,12 +15,16 @@ import { TEXT_MEDIUM } from '../../../../utils/fontsStyles';
 import styles from './IngredientsList.module.css';
 
 
-const IngredientsList = props => {
+const IngredientsList = () => {
+
+    //Получение состояния ингредиентов из контекста
+    const {state} = useContext(IngredientsContext);
 
     const bunsData = [];
     const saucesData = [];
     const fillingsData = [];
 
+    //Состояние модального окна
     const [openModal, setOpenModal] = useState(false);
 
     //Информация о выбранном ингредиенте, которая уходит в пропсы компоненту IngredientDetails
@@ -45,18 +48,18 @@ const IngredientsList = props => {
         setOpenModal(true);
     }
 
+   
+
 
     //Разделение ингредиентов по типу
-    for (let i = 0; i < props.ingredientsData.length; i++) {
-
-        if (props.ingredientsData[i].type === 'bun') {
-            bunsData.push(props.ingredientsData[i]);
-        } else if (props.ingredientsData[i].type === 'sauce') {
-            saucesData.push(props.ingredientsData[i]);
+    for (let i = 0; i < state.ingredients.length; i++) {
+        if (state.ingredients[i].type === 'bun') {
+            bunsData.push(state.ingredients[i]);
+        } else if (state.ingredients[i].type === 'sauce') {
+            saucesData.push(state.ingredients[i]);
         } else {
-            fillingsData.push(props.ingredientsData[i])
+            fillingsData.push(state.ingredients[i])
         }
-
     }
 
     return (
@@ -64,29 +67,37 @@ const IngredientsList = props => {
             <h3 className={TEXT_MEDIUM}>Булки</h3>
             {bunsData.map((element) => {
                 return (
-                    <BurgerElement key={element._id} element={element} openModal={openSelectedElementModal} />
+                    <BurgerElement 
+                        selectedIngredient={true} 
+                        key={element._id} 
+                        element={element} 
+                        openModal={openSelectedElementModal} 
+                    />
                 )
             })}
             <h3 className={TEXT_MEDIUM}>Соусы</h3>
             {saucesData.map((element) => {
                 return (
-                    <BurgerElement key={element._id} element={element} openModal={openSelectedElementModal} />
+                    <BurgerElement
+                        selectedIngredient={true} 
+                        key={element._id} 
+                        element={element} 
+                        openModal={openSelectedElementModal} />
                 )
             })}
             <h3 className={TEXT_MEDIUM}>Начинки</h3>
             {fillingsData.map((element) => {
                 return (
-                    <BurgerElement key={element._id} element={element} openModal={openSelectedElementModal} />
+                    <BurgerElement 
+                        selectedIngredient={true} 
+                        key={element._id} 
+                        element={element} 
+                        openModal={openSelectedElementModal} />
                 )
             })}
             {modal}
         </section>
     );
-}
-
-//Проверка данных приходящих из API
-IngredientsList.propTypes = {
-    ingredientsData: PropTypes.arrayOf(ingredientType).isRequired,
 }
 
 
