@@ -3,9 +3,11 @@
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import PropTypes from 'prop-types';
+
 import { getOrder } from '../../../../services/thunk/getOrderThunk';
 
-import { closeModalActionCreator } from '../../../../services/actions/modal/closeIngredientModal';
+import { closeOrderModalAC } from '../../../../services/actions/modal';
 
 import Modal from '../../../modals/Modal';
 import OrderDetails from './order-details/OrderDetails';
@@ -15,14 +17,13 @@ import { TEXT_MEDIUM } from '../../../../utils/constants';
 import styles from './Information.module.css';
 
 
-const Information = () => {
+const Information = props => {
 
     //Вытаскиваем нужные
-    const { selectedIngredients, totalPrice, modal, orders } = useSelector(store => ({
+    const { selectedIngredients, modal, order } = useSelector(store => ({
         selectedIngredients: store.selectedIngredients,
-        totalPrice: store.selectedIngredients.totalPrice,
         modal: store.modal,
-        orders: store.orders
+        order: store.order
     }))
 
     const dispatch = useDispatch()
@@ -35,6 +36,7 @@ const Information = () => {
     //Если запрос неуспешный, тогда в модальном окне появляется сообщение, что произошла ошибка
     const createOrder = () => {
         const idList = [];
+        idList.push(selectedIngredients.selectedBun._id)
         for (let i = 0; i < selectedIngredients.selectedIngredientsData.length; i++) {
             idList.push(selectedIngredients.selectedIngredientsData[i].ingredientData._id)
         }
@@ -47,8 +49,8 @@ const Information = () => {
     const modalContainer = (
         <>
             {modal.openOrderModal && (
-                <Modal onClose={() => dispatch(closeModalActionCreator())}>
-                    {orders.hasError ? (<div>Произошла ошибка, при обработке заказа</div>) : (<OrderDetails orderNumber={orders.ordersData[orders.ordersData.length - 1].numberOrder} />)}
+                <Modal onClose={() => dispatch(closeOrderModalAC())}>
+                    {order.hasError ? (<div>Произошла ошибка, при обработке заказа</div>) : (<OrderDetails orderNumber={order.orderData.numberOrder} />)}
                     
                 </Modal>
             )}
@@ -58,17 +60,24 @@ const Information = () => {
     return (
         <section className={`mt-10 ml-4 mr-4 ${styles.information}`}>
             <div className={styles.totalPrice}>
-                <p className={TEXT_MEDIUM}>{totalPrice}</p>
+                <p className={TEXT_MEDIUM}>{props.totalPrice}</p>
                 <div className={styles.icon}>
                     <CurrencyIcon />
                 </div>
             </div>
-            <Button onClick={createOrder} htmlType="button" type="primary" size="medium">
-                Нажми на меня
+            {selectedIngredients.selectedBun ? (
+                <Button onClick={createOrder} htmlType='button' type="primary" size="medium">
+                Сделать заказ
             </Button>
+            ) : ''}
+            
             {modalContainer}
         </section>
     );
+}
+
+Information.propTypes = {
+    totalPrice: PropTypes.number.isRequired
 }
 
 

@@ -4,7 +4,7 @@ import { useDrag, useDrop } from "react-dnd";
 
 import PropTypes from 'prop-types';
 
-import { deleteSelectedElement } from "../../../../services/actions/selected-ingredients/deleteIngredient";
+import { deleteSelectedElement } from "../../../../services/actions/selectedIngredients";
 
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './SelectedIngredient.module.css'
@@ -109,7 +109,10 @@ const SelectedIngredient = props => {
 
 SelectedIngredient.propTypes = {
     index: PropTypes.number.isRequired,
-    ingredient: ingredientType,
+    ingredient: PropTypes.shape({
+        ingredientData: ingredientType,
+        dragId: PropTypes.string.isRequired
+    }).isRequired,
     moveCard: PropTypes.func.isRequired
 }
 

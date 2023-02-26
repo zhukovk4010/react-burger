@@ -6,8 +6,10 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setActiveTab } from '../../../../services/actions/tabs/setActiveTab';
-import { closeModalActionCreator } from '../../../../services/actions/modal/closeIngredientModal';
+import PropTypes from 'prop-types';
+
+import { closeIngredientModalAC } from '../../../../services/actions/modal';
+import { deleteSelectedIngredient } from '../../../../services/actions/selectedIngredient';
 
 import Modal from '../../../modals/Modal';
 import IngredientDetails from './ingredient-details/IngredientDetails';
@@ -15,10 +17,9 @@ import BurgerElement from './ingredient-element/IngredientElement';
 
 import { TEXT_MEDIUM } from '../../../../utils/constants';
 import styles from './IngredientsList.module.css';
-import { deleteSelectedIngredient } from '../../../../services/actions/selectedIngredient/deleteSelectedIngredient';
 
 
-const IngredientsList = () => {
+const IngredientsList = props => {
 
     //Получаем из стора секцию с ингредиентами, секцию модального окна, секцию выбранных ингредиентов, выбранный элемент
     const { ingredients, selectedIngredients, selectedIngredient, modal } = useSelector(store => ({
@@ -39,7 +40,7 @@ const IngredientsList = () => {
     //Функция закрытия модального окна, отправляет в диспатч 2 экшена (закрытие модального окна и удаление выбранного элемента)
     //Передается в компонент Modal
     const closeModal = () => {
-        dispatch(closeModalActionCreator());
+        dispatch(closeIngredientModalAC());
         dispatch(deleteSelectedIngredient())
     }
 
@@ -76,17 +77,17 @@ const IngredientsList = () => {
             entries.forEach((e) => {
                 //Если хедер bunsSection виден полностью, то его переключатель становится активным
                 if (e.isIntersecting && e.target.id === 'bunsSection') {
-                    dispatch(setActiveTab('one'))
+                    props.setCurrent('one');
                     //Если хедер sauceSection виден полность и заглушка включена, то его переключатель становится активным
                 } else if ((e.isIntersecting && e.target.id === 'sauceSection') && plugSauce) {
-                    dispatch(setActiveTab('two'))
+                    props.setCurrent('two');
                     //Если хедер bunsSection пропадает из видимости, происходит переключение на соусы, так как они под ними
                 } else if (!e.isIntersecting && e.target.id === 'bunsSection') {
-                    dispatch(setActiveTab('two'))
+                    props.setCurrent('two');
                     //Если хедер sauceSection пропадается из видимости, то активным переключателем становятся Начинки
                     //В этом случае активируем заглушку для соусов, чтобы при обратном скролле можно было переключится на них
                 } else if (!e.isIntersecting && e.target.id === 'sauceSection') {
-                    dispatch(setActiveTab('three'));
+                    props.setCurrent('three');
                     plugSauce = true;
                 }
             });
@@ -132,6 +133,10 @@ const IngredientsList = () => {
             {modalContainer}
         </section>
     );
+}
+
+IngredientsList.propTypes = {
+    setCurrent: PropTypes.func.isRequired
 }
 
 

@@ -5,14 +5,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 
-import { addSelectedIngredientModal } from '../../../../../services/actions/selectedIngredient/addSelectedIngredientModal';
-import { openIngredientModal } from '../../../../../services/actions/modal/openIngredientModal';
+import { addSelectedIngredientModal } from '../../../../../services/actions/selectedIngredient';
 
 import { ingredientType } from '../../../../../utils/types';
 
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TEXT_DEFAULT } from '../../../../../utils/constants';
 import styles from './IngredientElement.module.css';
+import { openIngredientModalAC } from '../../../../../services/actions/modal';
 
 
 const BurgerElement = props => {
@@ -65,7 +65,7 @@ const BurgerElement = props => {
     //Включается модальное окно и и помещает в хранилище выбранный элемент
     const openModal = (ingredient) => {
         dispatch(addSelectedIngredientModal(ingredient))
-        dispatch(openIngredientModal())
+        dispatch(openIngredientModalAC())
     } 
 
 

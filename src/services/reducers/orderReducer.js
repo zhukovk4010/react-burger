@@ -3,7 +3,7 @@
 import { GET_ORDER, GET_ORDER_FAILED, GET_ORDER_SUCCESS } from "../../utils/constants";
 
 const initialState = {
-    ordersData: [],
+    orderData: null,
     isLoading: false,
     hasError: false
 }
@@ -20,17 +20,17 @@ const ordersReducer = (state = initialState, action) => {
         case GET_ORDER_SUCCESS: 
             return {
                 ...state,
-                ordersData: [
-                    ...state.ordersData,
-                    {name: action.name, numberOrder: action.numberOrder}
-                ],
+                orderData: {
+                    name: action.name, 
+                    numberOrder: action.numberOrder
+                },
                 isLoading: false,
                 hasError: false,
             }
         case GET_ORDER_FAILED:
             return {
                 ...state,
-                ordersData: [],
+                orderData: null,
                 hasError: true
             }
         default:

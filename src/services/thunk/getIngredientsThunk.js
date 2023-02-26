@@ -1,9 +1,9 @@
 //Функция запроса ингредиентов
 
 import { URL_INGREDIENTS } from '../../utils/constants';
-import { getIngredientsAC } from '../actions/ingredients/getIngredients';
-import { getIngredientsFailedAC } from '../actions/ingredients/getIngredientsFailed';
-import { getIngredientsSuccessAC } from '../actions/ingredients/getIngredientsSuccess';
+import { getIngredientsAC } from '../actions/ingredients';
+import { getIngredientsFailedAC } from '../actions/ingredients';
+import { getIngredientsSuccessAC } from '../actions/ingredients';
 
 
 export const getIngredients = () => {
@@ -27,17 +27,3 @@ export const getIngredients = () => {
         }
     })
 }
-    // getIngredientsData = async () => {
-    //     try {
-    //         const res = await fetch(URL);
-    //         if (res.ok) {
-    //             const data = await res.json();
-    //             dispatch({ type: 'addIngredients', data: data.data })
-    //         } else {
-    //             return Promise.reject(`Ошибка ${res.status}`);
-    //         }
-    //     } catch (error) {
-    //         dispatch({ type: 'addError' })
-    //         console.error('Ошибка:', error)
-    //     }
-    // }

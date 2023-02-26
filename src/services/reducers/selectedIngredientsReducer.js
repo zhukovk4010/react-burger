@@ -5,7 +5,6 @@ import { ADD_INGREDIENT, ADD_BUN, UPDATE_SELECTED_INGREDIENTS, DELETE_SELECTED_I
 const initialState = {
     selectedIngredientsData: [],
     selectedBun: null,
-    totalPrice: 0,
 }
 
 
@@ -17,25 +16,13 @@ const selectedIngredintsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 selectedIngredientsData: [...state.selectedIngredientsData,
-                action.ingredient],
-                totalPrice: state.totalPrice + action.ingredient.ingredientData.price
+                action.ingredient]
             }
         //Добавляем булку
         case ADD_BUN:
-            //Условия, если в конструкторе уже добавлена булка или нет
-            //Чтобы правильно рассчитать итоговую стоимость
-            if (state.selectedBun === null) {
-                return {
-                    ...state,
-                    selectedBun: action.ingredient,
-                    totalPrice: state.totalPrice + action.ingredient.price * 2
-                }
-            } else {
-                return {
-                    ...state,
-                    selectedBun: action.ingredient,
-                    totalPrice: state.totalPrice - state.selectedBun.price * 2 + action.ingredient.price * 2
-                }
+            return {
+                ...state,
+                selectedBun: action.ingredient,
             }
         //Обновляем список ингредиентов при сортировке (Булки нет в списке)
         case UPDATE_SELECTED_INGREDIENTS:

@@ -3,14 +3,14 @@
 //Булки отрисовываются отдельно
 //Основые ингредиенты отрисовываются в компоненте SelectedIngredient
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import uuid from "react-uuid";
 
-import { addSelectedIngredient } from "../../../services/actions/selected-ingredients/addSelectedIngredient";
-import { updateSelectedIngredients } from "../../../services/actions/selected-ingredients/updateSelectedIngredients";
-import { addBun } from "../../../services/actions/selected-ingredients/addBun";
+import { addSelectedIngredient } from "../../../services/actions/selectedIngredients";
+import { updateSelectedIngredients } from "../../../services/actions/selectedIngredients";
+import { addBun } from "../../../services/actions/selectedIngredients";
 
 import Information from "./information/Information";
 import SelectedIngredient from './SelectedIngredient/SelectedIngredient';
@@ -28,6 +28,20 @@ const BurgerConstructor = () => {
     }))
 
     const dispatch = useDispatch();
+
+    //Вычесление итоговой стоимости
+    const totalPrice = useMemo(() => {
+        let price = 0;
+        if (selectedIngredients.selectedBun) {
+            price = selectedIngredients.selectedBun.price * 2
+        }
+        if (selectedIngredients.selectedIngredientsData.length != 0) {
+            for (let i=0; i<selectedIngredients.selectedIngredientsData.length; i++) {
+                price = price + selectedIngredients.selectedIngredientsData[i].ingredientData.price
+            }
+        }  
+        return price;
+    }, [selectedIngredients])
 
     //Инициализация блока для броска ингредиента
     const [{ isHover }, dropTargerRef] = useDrop({
@@ -68,7 +82,7 @@ const BurgerConstructor = () => {
                         <ConstructorElement
                             type="top"
                             isLocked={true}
-                            text={selectedIngredients.selectedBun.name}
+                            text={`${selectedIngredients.selectedBun.name} (верх)`}
                             price={selectedIngredients.selectedBun.price}
                             thumbnail={selectedIngredients.selectedBun.image_mobile}
                         />
@@ -97,14 +111,14 @@ const BurgerConstructor = () => {
                         <ConstructorElement
                             type="bottom"
                             isLocked={true}
-                            text={selectedIngredients.selectedBun.name}
+                            text={`${selectedIngredients.selectedBun.name} (низ)`}
                             price={selectedIngredients.selectedBun.price}
                             thumbnail={selectedIngredients.selectedBun.image_mobile}
                         />
                     </div>
                 )}
             </section>
-            <Information />
+            <Information totalPrice={totalPrice} />
         </section>
     );
 }

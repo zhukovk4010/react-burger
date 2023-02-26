@@ -1,6 +1,6 @@
 //Reducer модального окна
 
-import { OPEN_INGREDIENT_MODAL, CLOSE_MODAL, OPEN_ORDER_MODAL } from "../../utils/constants";
+import { OPEN_INGREDIENT_MODAL, CLOSE_ORDER_MODAL, OPEN_ORDER_MODAL, CLOSE_INGREDIENT_MODAL,  } from "../../utils/constants";
 
 const initialState = {
     openIngredientsDetailsModal: false,
@@ -22,12 +22,17 @@ const modalReducer = (state = initialState, action) => {
                 ...state,
                 openOrderModal: true,
             }
-        //Закрытие модального окна  
-        case CLOSE_MODAL: 
+        //Закрытие модального окна заказа  
+        case CLOSE_ORDER_MODAL: 
             return {
                 ...state,
-                openIngredientsDetailsModal: false,
                 openOrderModal: false,
+            }
+        //Закрытие модального окна детального описания ингредиента
+        case CLOSE_INGREDIENT_MODAL:
+            return {
+                ...state,
+                openIngredientsDetailsModal: false
             }
         default:
             return state;

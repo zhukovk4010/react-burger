@@ -3,7 +3,7 @@
 import {GET_INGREDIENTS, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED} from '../../utils/constants';
 
 const initialState = {
-    ingredientsData: null,
+    ingredientsData: [],
     isLoading: false,
     hasError: false
 }
