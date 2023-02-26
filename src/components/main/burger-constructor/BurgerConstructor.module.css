@@ -1,0 +1,55 @@
+.burgerConstructor {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
+    height: 640px;
+}
+
+.bunContainer {
+    background-color: #8585AD;
+    border-radius: 20px;
+    text-align: center;
+    height: 50px;
+}
+
+.ingredientsContainer {
+    background-color: #8585AD;
+    border-radius: 20px;
+    text-align: center;
+    height: 50px;
+}
+
+.onHover {
+    border-radius: 20px;
+    border: 1px solid #8585AD;
+}
+
+.changingIngredientsEmpty {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.changingIngredients {
+    max-height: 440px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.changingIngredients::-webkit-scrollbar {
+    width: 8px;
+    height: 0;
+}
+
+.changingIngredients::-webkit-scrollbar-track {
+    background: #2F2F37;
+    border-radius: 5px;
+    height: 45vh;
+}
+
+.changingIngredients::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border-radius: 5px;
+}

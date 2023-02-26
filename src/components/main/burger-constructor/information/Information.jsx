@@ -1,69 +1,55 @@
 //Компонент с информацией о итоговой цене и кнопке "Оформить заказ"
 //При клике вызывается модальное окно с информацией о заказе
 
-import { useContext, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { IngredientsContext } from '../../../../utils/context';
+import { getOrder } from '../../../../services/thunk/getOrderThunk';
+
+import { closeModalActionCreator } from '../../../../services/actions/modal/closeIngredientModal';
 
 import Modal from '../../../modals/Modal';
 import OrderDetails from './order-details/OrderDetails';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { TEXT_MEDIUM } from '../../../../utils/fontsStyles';
+import { TEXT_MEDIUM } from '../../../../utils/constants';
 import styles from './Information.module.css';
-
 
 
 const Information = () => {
 
-    const { state, dispatch } = useContext(IngredientsContext);
+    //Вытаскиваем нужные
+    const { selectedIngredients, totalPrice, modal, orders } = useSelector(store => ({
+        selectedIngredients: store.selectedIngredients,
+        totalPrice: store.selectedIngredients.totalPrice,
+        modal: store.modal,
+        orders: store.orders
+    }))
 
-    //Состояние модального окна
-    const [openModal, setOpenModal] = useState(false);
+    const dispatch = useDispatch()
+
 
     //Создание запроса
-    //В нем созадется список id ингредиентов и отправляется запрос к API
+    //В нем созадется список id ингредиентов 
+    //Затем диспачим функции getOrder, которая изменяется состояние секции заказов
     //Если запрос успешный, тогда отркывается модальное окно и в нем показывается номер заказа из API
-    //Если запрос неуспешный или данные которые из него пришли, тогда в консоле появляется ошибка, 
-    //а модальное окно не открывается
+    //Если запрос неуспешный, тогда в модальном окне появляется сообщение, что произошла ошибка
     const createOrder = () => {
         const idList = [];
-        for (let i = 0; i < state.selectedIngredients.otherIngredients.length; i++) {
-            idList.push(state.selectedIngredients.otherIngredients[i]._id)
+        for (let i = 0; i < selectedIngredients.selectedIngredientsData.length; i++) {
+            idList.push(selectedIngredients.selectedIngredientsData[i].ingredientData._id)
         }
-        idList.push(state.selectedIngredients.bun._id)
-        const getOrder = async () => {
-            try {
-                const res = await fetch('https://norma.nomoreparties.space/api/orders', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json;charset=utf-8'
-                    },
-                    body: JSON.stringify({'ingredients': idList}) 
-                });
-                if (res.ok) {
-                    let data = await res.json();
-                    dispatch({type: 'addOrder', name: data.name, orderNumber: data.order.number});
-                    setOpenModal(true)
-                } else {
-                    return Promise.reject(`Ошибка ${res.status}`);
-                }  
-            } catch (error) {
-                console.error('Ошибка:', error)
-            }
-        }
-        getOrder()
-        
+        idList.push(selectedIngredients.selectedBun._id)
+        dispatch(getOrder(idList));
     }
 
     
-    //При openModal == true, отрисовывается содержимое переменной
-    //Передаем в модальное окно функцию onClose, которая будет закрывать модальное окно
-    const modal = (
+    //Если состояние модального окна заказа изменяется на true, отрисовывается модалка
+    const modalContainer = (
         <>
-            {openModal && (
-                <Modal onClose={() => setOpenModal(false)}>
-                    <OrderDetails orderNumber={state.orders[state.orders.length - 1].orderNumber}  />
+            {modal.openOrderModal && (
+                <Modal onClose={() => dispatch(closeModalActionCreator())}>
+                    {orders.hasError ? (<div>Произошла ошибка, при обработке заказа</div>) : (<OrderDetails orderNumber={orders.ordersData[orders.ordersData.length - 1].numberOrder} />)}
+                    
                 </Modal>
             )}
         </>
@@ -72,15 +58,15 @@ const Information = () => {
     return (
         <section className={`mt-10 ml-4 mr-4 ${styles.information}`}>
             <div className={styles.totalPrice}>
-                <p className={TEXT_MEDIUM}>{state.selectedIngredients.totalPrice}</p>
+                <p className={TEXT_MEDIUM}>{totalPrice}</p>
                 <div className={styles.icon}>
                     <CurrencyIcon />
                 </div>
             </div>
-            <Button htmlType="button" type="primary" size="medium" onClick={createOrder}>
+            <Button onClick={createOrder} htmlType="button" type="primary" size="medium">
                 Нажми на меня
             </Button>
-            {modal}
+            {modalContainer}
         </section>
     );
 }

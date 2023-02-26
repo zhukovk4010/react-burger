@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import styles from './OrderDetails.module.css';
-import { DIGITS_LARGE, TEXT_DEFAULT, TEXT_MEDIUM, TEXT_INACTIVE_COLOR } from "../../../../../utils/fontsStyles";
+import { DIGITS_LARGE, TEXT_DEFAULT, TEXT_MEDIUM, TEXT_INACTIVE_COLOR } from "../../../../../utils/constants";
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 

@@ -1,4 +1,4 @@
-.selectedElement {
+.wrapper {
     display: grid;
     grid-template-columns: 24px auto;
     gap: 8px;
