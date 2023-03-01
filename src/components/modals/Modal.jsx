@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import ModalOverlay from "./ModalOverlay";
 
-import { TEXT_LARGE } from "../../utils/fontsStyles";
+import { TEXT_LARGE } from "../../utils/constants";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './Modal.module.css';
 

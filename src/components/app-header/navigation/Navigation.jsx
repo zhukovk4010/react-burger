@@ -2,7 +2,7 @@
 
 import NavigationLink from './navigation-link/NavigationLink';
 
-import { TEXT_DEFAULT, TEXT_INACTIVE_COLOR } from '../../../utils/fontsStyles';
+import { TEXT_DEFAULT, TEXT_INACTIVE_COLOR } from '../../../utils/constants';
 import styles from './Navigation.module.css';
 
 

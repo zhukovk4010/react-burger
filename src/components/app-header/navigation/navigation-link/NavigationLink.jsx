@@ -6,10 +6,10 @@ import styles from './NavigationLink.module.css';
 
 const NavigationLink = props => {
     return (
-        <a className={styles.button}>
+        <div className={styles.button}>
             <BurgerIcon type={props.type} />
             <h3 className={`${props.styleTextButton} ${props.inActive}`}>{props.name}</h3>
-        </a>
+        </div>
     );
 }
 
