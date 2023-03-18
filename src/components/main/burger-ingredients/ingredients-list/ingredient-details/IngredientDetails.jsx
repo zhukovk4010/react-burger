@@ -1,42 +1,85 @@
-import { ingredientType } from '../../../../../utils/types';
+//Компонент деталец выбранного ингредиента, передается в модальное окно
 
-import { DIGITS_DEFAULT, TEXT_DEFAULT, TEXT_INACTIVE_COLOR, TEXT_MEDIUM } from '../../../../../utils/constants';
-import styles from './IngredientDetails.module.css';
+import {
+    DIGITS_DEFAULT,
+    TEXT_DEFAULT,
+    TEXT_INACTIVE_COLOR,
+    TEXT_LARGE,
+    TEXT_MEDIUM,
+} from "../../../../../utils/constants";
+import styles from "./IngredientDetails.module.css";
+import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router";
 
+const IngredientDetails = () => {
+    const location = useLocation();
+    const { id } = useParams();
+    const { ingredientsData } = useSelector((store) => ({
+        ingredientsData: store.ingredients.ingredientsData,
+    }));
 
-const IngredientDetails = props => {
+    let background = location.state && location.state.background;
+
+    //Находим нужный ингредиент
+    const selectedIngredient = ingredientsData.find(
+        (element) => element._id === id
+    );
+
+    if (ingredientsData.length === 0) {
+        return <div>Ожидайте</div>;
+    }
 
     return (
         <section className={styles.container}>
+            {background ? (
+                ""
+            ) : (
+                <div className={`${TEXT_LARGE} ${styles.headerName}`}>
+                    Детали ингредиента
+                </div>
+            )}
             <div className={styles.ingredientImg}>
-                <img src={props.ingredient.image_large} alt={''} />
+                <img src={selectedIngredient.image_large} alt={""} />
             </div>
-            <p className={`${TEXT_MEDIUM} ${styles.nameIngredient}`}>{props.ingredient.name}</p>
+            <p className={`${TEXT_MEDIUM} ${styles.nameIngredient}`}>
+                {selectedIngredient.name}
+            </p>
             <div className={styles.detailInfomation}>
                 <div className={styles.categoryInformation}>
-                    <p className={`${TEXT_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>Калории,ккал</p>
-                    <p className={`${DIGITS_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>{props.ingredient.calories}</p>
+                    <p className={`${TEXT_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>
+                        Калории,ккал
+                    </p>
+                    <p className={`${DIGITS_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>
+                        {selectedIngredient.calories}
+                    </p>
                 </div>
                 <div className={styles.categoryInformation}>
-                    <p className={`${TEXT_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>Белки,  г</p>
-                    <p className={`${DIGITS_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>{props.ingredient.proteins}</p>
+                    <p className={`${TEXT_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>
+                        Белки, г
+                    </p>
+                    <p className={`${DIGITS_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>
+                        {selectedIngredient.proteins}
+                    </p>
                 </div>
                 <div className={styles.categoryInformation}>
-                    <p className={`${TEXT_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>Жиры,  г</p>
-                    <p className={`${DIGITS_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>{props.ingredient.fat}</p>
+                    <p className={`${TEXT_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>
+                        Жиры, г
+                    </p>
+                    <p className={`${DIGITS_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>
+                        {selectedIngredient.fat}
+                    </p>
                 </div>
                 <div className={styles.categoryInformation}>
-                    <p className={`${TEXT_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>Углеводы,  г</p>
-                    <p className={`${DIGITS_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>{props.ingredient.carbohydrates}</p>
+                    <p className={`${TEXT_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>
+                        Углеводы, г
+                    </p>
+                    <p className={`${DIGITS_DEFAULT} ${TEXT_INACTIVE_COLOR}`}>
+                        {selectedIngredient.carbohydrates}
+                    </p>
                 </div>
             </div>
         </section>
-    )
-}
-
-IngredientDetails.propTypes = {
-    ingredient: ingredientType,
-}
-
+    );
+};
 
 export default IngredientDetails;

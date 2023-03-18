@@ -1,0 +1,25 @@
+.button {
+    box-sizing: border-box;
+
+    height: 24px;
+    width: auto;
+
+    display: grid;
+    grid-template-columns: 24px auto;
+    gap: 8px;
+
+    align-items: center;
+    border-radius: 40px;
+
+    color: inherit;
+}
+
+.activeLinkName {
+    text-decoration: none;
+    color: white;
+}
+
+.linkName {
+    text-decoration: none;
+    color: #8585ad;
+}

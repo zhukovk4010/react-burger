@@ -1,13 +1,17 @@
 //Reducer списка заказов
 
-import { GET_ORDER, GET_ORDER_FAILED, GET_ORDER_SUCCESS } from "../../utils/constants";
+import {
+    GET_ORDER,
+    GET_ORDER_FAILED,
+    GET_ORDER_SUCCESS,
+} from "../../utils/constants";
 
 const initialState = {
     orderData: null,
     isLoading: false,
-    hasError: false
-}
-
+    hasError: false,
+    errorName: "",
+};
 
 const ordersReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -16,27 +20,27 @@ const ordersReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: true,
                 hasError: false,
-            }
-        case GET_ORDER_SUCCESS: 
+            };
+        case GET_ORDER_SUCCESS:
             return {
                 ...state,
                 orderData: {
-                    name: action.name, 
-                    numberOrder: action.numberOrder
+                    name: action.name,
+                    numberOrder: action.numberOrder,
                 },
                 isLoading: false,
                 hasError: false,
-            }
+            };
         case GET_ORDER_FAILED:
             return {
                 ...state,
                 orderData: null,
-                hasError: true
-            }
+                hasError: true,
+                errorName: action.errorName,
+            };
         default:
             return state;
     }
-}
-
+};
 
 export default ordersReducer;

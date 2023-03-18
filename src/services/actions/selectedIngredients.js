@@ -1,44 +1,44 @@
-import { 
-    ADD_BUN, 
-    ADD_INGREDIENT, 
-    DELETE_SELECTED_INGREDIENT, 
-    DELETE_SELECTED_INGREDIENTS, 
-    UPDATE_SELECTED_INGREDIENTS 
+import uuid from "react-uuid";
+
+import {
+    ADD_BUN,
+    ADD_INGREDIENT,
+    DELETE_SELECTED_INGREDIENT,
+    DELETE_SELECTED_INGREDIENTS,
+    UPDATE_SELECTED_INGREDIENTS,
 } from "../../utils/constants";
 
 export const addBun = (ingredient) => {
-    return ({
+    return {
         type: ADD_BUN,
-        ingredient: ingredient
-    })
-}
+        ingredient: ingredient,
+    };
+};
 
-export const addSelectedIngredient = (ingredientData, dragId) => {
-    return ({
+export const addSelectedIngredient = (ingredientData) => {
+    return {
         type: ADD_INGREDIENT,
-        ingredient: {ingredientData,
-        dragId: dragId
-        }
-    })
-}
+        ingredient: { ingredientData, dragId: uuid() },
+    };
+};
 
 export const deleteSelectedElement = (data, price) => {
     return {
-        type: DELETE_SELECTED_INGREDIENT, 
+        type: DELETE_SELECTED_INGREDIENT,
         data: data,
-        price: price  
-    }
-}
+        price: price,
+    };
+};
 
 export const deleteSelectedIngredients = () => {
     return {
-        type: DELETE_SELECTED_INGREDIENTS,  
-    }
-}
+        type: DELETE_SELECTED_INGREDIENTS,
+    };
+};
 
 export const updateSelectedIngredients = (ingredients) => {
-    return ({
+    return {
         type: UPDATE_SELECTED_INGREDIENTS,
-        ingredients: ingredients
-    })
-}
+        ingredients: ingredients,
+    };
+};

@@ -1,0 +1,37 @@
+.profileContainer {
+    width: 1240px;
+
+    margin: 50px auto;
+
+    display: grid;
+    grid-template-columns: 320px auto;
+    gap: 60px;
+}
+
+.linksContainer {
+    margin-bottom: 80px;
+    display: grid;
+    grid-template-rows: repeat(3, 64px);
+}
+
+.linkContainer {
+    line-height: 64px;
+    color: inherit;
+}
+
+.link {
+    text-decoration: none;
+    color: #8585ad;
+}
+
+.activeLink {
+    text-decoration: none;
+    color: white;
+}
+
+.buttonsPanel {
+    width: 480px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+}

@@ -1,0 +1,23 @@
+.registerContainer {
+    width: 480px;
+    height: 478px;
+    margin: 50px auto;
+}
+
+.registerHeader {
+    text-align: center;
+}
+
+.buttonContainer {
+    margin: 24px 0 80px 0;
+    text-align: center;
+}
+
+.registerFooter {
+    text-align: center;
+}
+
+.navigate {
+    color: #4c4cff;
+    text-decoration: none;
+}
