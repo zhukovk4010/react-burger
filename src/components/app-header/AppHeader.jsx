@@ -3,7 +3,7 @@ import NavigationLink from "./navigation-link/NavigationLink";
 
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./AppHeader.module.css";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const AppHeader = () => {
     return (
@@ -25,7 +25,9 @@ const AppHeader = () => {
                     </NavLink>
                 </div>
                 <div className={styles.logoContainer}>
-                    <Logo />
+                    <Link to="/">
+                        <Logo />
+                    </Link>
                 </div>
 
                 <div className={styles.profileLink}>

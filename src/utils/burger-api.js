@@ -45,7 +45,7 @@ export const sendEmail = (data) => {
 
 //Отправка нового пароля и кода, который пришел на почту
 export const sendChangedPassword = (data) => {
-    return fetch(`${URL_API}/password-reset`, data).then(checkResponse);
+    return fetch(`${URL_API}/password-reset/reset`, data).then(checkResponse);
 };
 
 //Отправка данных о пользователе при регистрации

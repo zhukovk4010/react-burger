@@ -23,14 +23,16 @@ const NavigationLink = (props) => {
                 <>
                     <BurgerIcon
                         type={
-                            activeIconRoute === "/" || selectedIngredient.state
+                            activeIconRoute === "/" ||
+                            selectedIngredient.selectedIngredient !== null
                                 ? "primary"
                                 : "secondary"
                         }
                     />
                     <p
                         className={
-                            activeIconRoute === "/" || selectedIngredient.state
+                            activeIconRoute === "/" ||
+                            selectedIngredient.selectedIngredient !== null
                                 ? `${TEXT_DEFAULT} ${styles.activeLinkName}`
                                 : `${TEXT_DEFAULT} ${styles.linkName}`
                         }
