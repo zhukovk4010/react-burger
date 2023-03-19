@@ -1,11 +1,11 @@
 .headerContainer {
-    background: #1C1C21
+    background: #1c1c21;
 }
 
 .header {
     height: 88px;
-    width: 1280px;
-    
+    width: 1240px;
+
     margin: 0 auto;
 
     display: grid;
@@ -13,7 +13,36 @@
     align-items: center;
 }
 
+.leftSideHeader {
+    width: 383px;
+    height: 56px;
+
+    display: grid;
+    grid-template-columns: 178px 197px;
+    align-items: center;
+    gap: 8px;
+}
+
 .logoContainer {
     display: grid;
     justify-self: center;
+}
+
+.profile {
+    display: grid;
+    justify-items: end;
+}
+
+.link {
+    text-decoration: none;
+}
+
+.activeLink {
+    text-decoration: none;
+    color: white;
+}
+
+.profileLink {
+    display: grid;
+    justify-items: end;
 }

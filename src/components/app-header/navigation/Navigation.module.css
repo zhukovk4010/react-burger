@@ -1,9 +1,0 @@
-.navigation {
-    width: 383px;
-    height: 56px;
-
-    display: grid;
-    grid-template-columns: 178px 197px;
-    align-items: center;
-    gap: 8px;
-}

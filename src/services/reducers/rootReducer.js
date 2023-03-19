@@ -1,13 +1,13 @@
 //Корневой reducer
 
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import ingredientsReducer from './ingredientsReducer';
-import selectedIngredientsReducer from './selectedIngredientsReducer';
-import orderRedicer from './orderReducer';
-import selectedIngredientReducer from './selectedIngredientReducer';
-import modalReducer from './modalReducer';
-
+import ingredientsReducer from "./ingredientsReducer";
+import selectedIngredientsReducer from "./selectedIngredientsReducer";
+import orderRedicer from "./orderReducer";
+import selectedIngredientReducer from "./selectedIngredientReducer";
+import modalReducer from "./modalReducer";
+import userReducer from "./userReducer";
 
 const rootReducer = combineReducers({
     //Ингредиенты из API
@@ -20,7 +20,8 @@ const rootReducer = combineReducers({
     order: orderRedicer,
     //Состояние модальных окон
     modal: modalReducer,
+    //Пользователь
+    user: userReducer,
 });
-
 
 export default rootReducer;

@@ -1,3 +1,9 @@
+.linkIngredient {
+    text-decoration: none;
+    color: white;
+    color: inherit;
+}
+
 .ingredientsElement {
     display: inline-block;
     position: relative;
