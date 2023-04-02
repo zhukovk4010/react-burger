@@ -20,7 +20,6 @@ export const getOrder = (idList) => {
                 body: JSON.stringify({ ingredients: idList }),
             });
             dispatch(getOrderSuccessAction(res));
-            console.log(res);
             dispatch(openOrderModalAction());
             dispatch(deleteSelectedIngredientsAction());
         } catch (e) {

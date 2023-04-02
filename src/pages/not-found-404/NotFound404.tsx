@@ -1,5 +1,5 @@
 //Страница 404
-import { TEXT_LARGE } from "../../../utils/constants";
+import { TEXT_LARGE } from "../../utils/constants";
 import styles from "./NotFound404.module.css";
 
 const NotFound404 = () => {

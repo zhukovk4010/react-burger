@@ -7,14 +7,13 @@ import {
     PasswordInput,
     Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { getUserRequest, userLogout } from "../../../utils/burgerApi";
 import {
     deleteUserDataAction,
     setUserDataAction,
-} from "../../../services/actions/user";
+} from "../../services/actions/user";
 
 import OrdersPage from "../orders-page/OredersPage";
 
@@ -22,11 +21,13 @@ import {
     TEXT_DEFAULT,
     TEXT_INACTIVE_COLOR,
     TEXT_MEDIUM,
-} from "../../../utils/constants";
-import { getCookie, setCookie } from "../../../utils/cookie";
+} from "../../utils/constants";
+import { setCookie } from "../../utils/cookie";
 
 import styles from "./Profile.module.css";
-import { AppStateType } from "../../../services/reducers/rootReducer";
+import { AppStateType } from "../../services/reducers/rootReducer";
+import { useForm } from "../../hooks/useForm";
+import { exitUser, saveNewUserData } from "../../services/thunk/userThunk";
 
 const Profile = () => {
     const location = useLocation();
@@ -38,28 +39,58 @@ const Profile = () => {
         userName: state.user.name,
     }));
 
-    //Создаем состояния форм
-    const [nameValue, setNameValue] = useState("");
-    const [emailValue, setEmailValue] = useState("");
-    const [passwordValue, setPasswordValue] = useState("");
+    const { values, handleChange, setValues } = useForm({
+        name: "",
+        email: "",
+        password: "",
+    });
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     //Заполняем состояние форм данными из стора
     useEffect(() => {
-        setNameValue(userName);
-        setEmailValue(userEmail);
+        setValues({ name: userName, email: userEmail, password: "" });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userName, userEmail]);
 
     let buttonsPanel;
 
+    //При клике на кнопку отменить возвращаем исходные данные
+    const onButtonСancellationClick = () => {
+        setValues({ name: userName, email: userEmail, password: "" });
+    };
+
+    //Изменение данных
+    const onSubmitForm = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const data = await saveNewUserData(
+            values.name,
+            values.email,
+            values.password
+        );
+        if (data.success === true) {
+            dispatch(setUserDataAction(data.user.email, data.user.name));
+            setValues({ name: userName, email: userEmail, password: "" });
+        }
+    };
+
+    //Выход из системы
+    const onButtonExitClick = async () => {
+        const res = await exitUser();
+        if (res.success === true) {
+            dispatch(deleteUserDataAction());
+            setCookie("accessToken", null, { expires: -1 });
+            localStorage.setItem("refreshToken", "");
+            navigate("/", { replace: true });
+        }
+    };
+
     //Если что-то изменилось в формах, тогда отображаем кнопки сохранить и отменить
     if (
-        userName !== nameValue ||
-        userEmail !== emailValue ||
-        passwordValue !== ""
+        userName !== values.name ||
+        userEmail !== values.email ||
+        values.password !== ""
     ) {
         buttonsPanel = (
             <div className={styles.buttonsPanel}>
@@ -73,11 +104,10 @@ const Profile = () => {
                     <p className={TEXT_DEFAULT}>Отмена</p>
                 </Button>
                 <Button
-                    htmlType="button"
+                    htmlType="submit"
                     type="primary"
                     size="small"
                     extraClass="mt-6"
-                    onClick={() => onButtonSaveClick()}
                 >
                     <p className={TEXT_DEFAULT}>Сохранить</p>
                 </Button>
@@ -85,81 +115,37 @@ const Profile = () => {
         );
     }
 
-    //При клике на кнопку отменить возвращаем исходные данные
-    const onButtonСancellationClick = () => {
-        setNameValue(userName);
-        setEmailValue(userEmail);
-        setPasswordValue("");
-    };
-
-    //При клике на кнопку сохранить изменяем данные на сервере, обновленные данные заменяем в сторе
-    const onButtonSaveClick = async () => {
-        const user = await getUserRequest({
-            method: "PATCH",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-                authorization: "Bearer " + getCookie("accessToken"),
-            },
-            body: JSON.stringify({
-                name: nameValue,
-                email: emailValue,
-                password: passwordValue && passwordValue,
-            }),
-            redirect: "follow",
-            referrerPolicy: "no-referrer",
-        });
-        if (user.user) {
-            dispatch(setUserDataAction(user.user.email, user.user.name));
-            setPasswordValue("");
-        }
-    };
-
-    //Выход из системы
-    const onButtonExitClick = async () => {
-        await userLogout({
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json;charset=utf-8",
-            },
-            body: JSON.stringify({
-                token: localStorage.getItem("refreshToken"),
-            }),
-        });
-        dispatch(deleteUserDataAction());
-        setCookie("accessToken", null, { expires: -1 });
-        localStorage.setItem("refreshToken", "");
-        navigate("/", { replace: true });
-    };
-
     //Отображаем контент на странице
     let content;
     if (activeLink === "/profile") {
         content = (
-            <div>
-                <Input
-                    placeholder={"Имя"}
-                    extraClass="mb-6"
-                    icon={"EditIcon"}
-                    value={nameValue}
-                    onChange={(e) => setNameValue(e.target.value)}
-                />
-                <EmailInput
-                    placeholder={"Логин"}
-                    extraClass="mb-6"
-                    isIcon={true}
-                    value={emailValue}
-                    onChange={(e) => setEmailValue(e.target.value)}
-                />
-                <PasswordInput
-                    value={passwordValue}
-                    onChange={(e) => setPasswordValue(e.target.value)}
-                    icon={"EditIcon"}
-                />
-                {buttonsPanel}
-            </div>
+            <form onSubmit={onSubmitForm}>
+                <div>
+                    <Input
+                        name="name"
+                        placeholder={"Имя"}
+                        extraClass="mb-6"
+                        icon={"EditIcon"}
+                        value={values.name!}
+                        onChange={handleChange}
+                    />
+                    <EmailInput
+                        name="email"
+                        placeholder={"Логин"}
+                        extraClass="mb-6"
+                        isIcon={true}
+                        value={values.email!}
+                        onChange={handleChange}
+                    />
+                    <PasswordInput
+                        name="password"
+                        value={values.password!}
+                        onChange={handleChange}
+                        icon={"EditIcon"}
+                    />
+                    {buttonsPanel}
+                </div>
+            </form>
         );
     } else if (activeLink === "/profile/orders") {
         content = <OrdersPage />;

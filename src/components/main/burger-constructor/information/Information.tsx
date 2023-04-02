@@ -64,7 +64,9 @@ const Information = ({ totalPrice }: InformationPropsTypes) => {
                         ._id
                 );
             }
-            idList.push(typeof selectedIngredients.selectedBun?._id);
+            if (typeof selectedIngredients.selectedBun?._id === "string") {
+                idList.push(selectedIngredients.selectedBun._id);
+            }
 
             dispatch(getOrder(idList));
         } else {

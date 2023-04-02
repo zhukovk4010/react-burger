@@ -38,37 +38,37 @@ export const getIngredientsData = () => {
 };
 
 //Отправка заказа
-export const sendOrder = (data: any) => {
+export const sendOrder = (data: RequestInit) => {
     return fetch(`${URL_API}/orders`, data).then(checkResponse);
 };
 
 //Отправка email
-export const sendEmail = (data: any) => {
+export const sendEmail = (data: RequestInit) => {
     return fetch(`${URL_API}/password-reset`, data).then(checkResponse);
 };
 
 //Отправка нового пароля и кода, который пришел на почту
-export const sendChangedPassword = (data: any) => {
+export const sendChangedPassword = (data: RequestInit) => {
     return fetch(`${URL_API}/password-reset/reset`, data).then(checkResponse);
 };
 
 //Отправка данных о пользователе при регистрации
-export const sendUserRegister = (data: any) => {
+export const sendUserRegister = (data: RequestInit) => {
     return fetch(`${URL_API}/auth/register`, data).then(checkResponse);
 };
 
 //Отправка данные о пользователе при авторизации
-export const sendUserLogin = (data: any) => {
+export const sendUserLogin = (data: RequestInit) => {
     return fetch(`${URL_API}/auth/login`, data).then(checkResponse);
 };
 
 //Выход из системы
-export const userLogout = (data: any) => {
+export const userLogout = (data: RequestInit) => {
     return fetch(`${URL_API}/auth/logout`, data).then(checkResponse);
 };
 
 //Получение данные о пользователе
-export const getUserRequest = async (data: any) => {
+export const getUserRequest = async (data: RequestInit) => {
     try {
         //Получение данных
         const res = await fetch(`${URL_API}/auth/user`, data);
@@ -81,8 +81,9 @@ export const getUserRequest = async (data: any) => {
                 const { refreshToken, accessToken } =
                     await refreshTokenRequest();
                 saveTokens(refreshToken, accessToken);
-
-                data.headers.authorization = accessToken;
+                const headersInit: HeadersInit = {};
+                data.headers = headersInit;
+                data.headers!.authorization = accessToken;
 
                 //Получаем пользователя через новые данные
                 const res = await fetch(`${URL_API}/auth/user`, data);

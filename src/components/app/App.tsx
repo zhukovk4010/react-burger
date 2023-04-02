@@ -1,57 +1,35 @@
 //Импорты
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation, useNavigate } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 
 import { closeIngredientModalAction } from "../../services/actions/modal";
 import { deleteSelectedIngredientToModal } from "../../services/actions/selectedIngredient";
-import { setUserDataAction } from "../../services/actions/user";
 import { getIngredients } from "../../services/thunk/getIngredientsThunk";
-import { getUserRequest } from "../../utils/burgerApi";
 import { DispatchType } from "../../services/reducers/rootReducer";
+import { getUser } from "../../services/thunk/userThunk";
 
 import AppHeader from "../app-header/AppHeader";
 import IngredientDetails from "../main/burger-ingredients/ingredients-list/ingredient-details/IngredientDetails";
 import Main from "../main/Main";
 import Modal from "../modals/Modal";
-import ForgotPassword from "../pages/forgot-password/ForgotPassword";
-import Login from "../pages/login/Login";
-import NotFound404 from "../pages/not-found-404/NotFound404";
-import Profile from "../pages/profile/Profile";
-import Register from "../pages/register/Register";
-import ResetPassword from "../pages/reset-password/ResetPassword";
+import ForgotPassword from "../../pages/forgot-password/ForgotPassword";
+import Login from "../../pages/login/Login";
+import NotFound404 from "../../pages/not-found-404/NotFound404";
+import Profile from "../../pages/profile/Profile";
+import Register from "../../pages/register/Register";
+import ResetPassword from "../../pages/reset-password/ResetPassword";
 import ProtectedRouteElement from "../protected-route-component/ProtectedRouteElement";
-import { getCookie } from "../../utils/cookie";
 
 const App = () => {
     const dispatch = useDispatch<DispatchType>();
 
-    //Инициализация пользователя, проверяем токен
-    const init = useCallback(async () => {
-        try {
-            const user = await getUserRequest({
-                method: "GET",
-                mode: "cors",
-                cache: "no-cache",
-                credentials: "same-origin",
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                    authorization: "Bearer " + getCookie("accessToken"),
-                },
-                redirect: "follow",
-                referrerPolicy: "no-referrer",
-            });
-            dispatch(setUserDataAction(user.user.email, user.user.name));
-        } catch (e) {
-            return null;
-        }
-    }, [dispatch]);
-
+    //Запрос ингредиентов и пользователя из API
     useEffect(() => {
         dispatch(getIngredients());
-        init();
-    }, [init, dispatch]);
+        dispatch(getUser());
+    }, [dispatch]);
 
     const ModalSwitch = () => {
         const dispatch = useDispatch();
@@ -72,10 +50,24 @@ const App = () => {
         const mainRoute = <Route path="/" element={<Main />}></Route>;
 
         //Страница логина
-        const loginRoute = <Route path="/login" element={<Login />} />;
+        const loginRoute = (
+            <Route
+                path="/login"
+                element={
+                    <ProtectedRouteElement anonymous element={<Login />} />
+                }
+            />
+        );
 
         //Страница регистрации
-        const registerRoute = <Route path="/register" element={<Register />} />;
+        const registerRoute = (
+            <Route
+                path="/register"
+                element={
+                    <ProtectedRouteElement anonymous element={<Register />} />
+                }
+            />
+        );
 
         //Дополнительная информация об ингредиенте
         const ingredientDetailsRoute = (
@@ -84,12 +76,28 @@ const App = () => {
 
         //Восстановить пароль
         const forgotPasswordRoute = (
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route
+                path="/forgot-password"
+                element={
+                    <ProtectedRouteElement
+                        anonymous
+                        element={<ForgotPassword />}
+                    />
+                }
+            />
         );
 
         //Изменить пароль
         const resetPasswordRoute = (
-            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route
+                path="/reset-password"
+                element={
+                    <ProtectedRouteElement
+                        anonymous
+                        element={<ResetPassword />}
+                    />
+                }
+            />
         );
 
         //Профиль
