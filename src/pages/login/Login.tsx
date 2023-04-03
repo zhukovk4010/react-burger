@@ -2,10 +2,7 @@
 
 //Импорты
 import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-
-import { setUserDataAction } from "../../services/actions/user";
-import { saveTokens } from "../../utils/burgerApi";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     TEXT_DEFAULT,
     TEXT_INACTIVE_COLOR,
@@ -21,20 +18,22 @@ import {
 import styles from "./Login.module.css";
 import { useForm } from "../../hooks/useForm";
 import { sendLoginData } from "../../services/thunk/userThunk";
+import { DispatchType } from "../../services/reducers/rootReducer";
 
 const Login = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<DispatchType>();
     const navigate = useNavigate();
+    const location = useLocation();
     const { values, handleChange } = useForm({ email: "", password: "" });
 
     //Отправка формы на сервер
     const onSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault();
-        const data = await sendLoginData(values.email, values.password);
-        if (data.success === true) {
-            saveTokens(data.refreshToken, data.accessToken);
-            dispatch(setUserDataAction(data.user.email, data.user.name));
-            navigate("/", { replace: true });
+        const success = await dispatch(
+            sendLoginData(values.email, values.password)
+        );
+        if (success) {
+            navigate(location.state.from.pathname, { replace: true });
         }
     };
 

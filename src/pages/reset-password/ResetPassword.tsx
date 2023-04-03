@@ -17,18 +17,23 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import styles from "./ResetPassword.module.css";
 import { resetPassword } from "../../services/thunk/userThunk";
 import { useForm } from "../../hooks/useForm";
+import { useDispatch } from "react-redux";
+import { DispatchType } from "../../services/reducers/rootReducer";
 
 const ResetPassword = () => {
     const { values, handleChange } = useForm({ password: "", code: "" });
 
     const navigate = useNavigate();
     const location = useLocation();
+    const dispatch = useDispatch<DispatchType>();
 
     //Отправка формы на сервер
     const onSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault();
-        const data = await resetPassword(values.password, values.code);
-        if (data.success === true) {
+        const success = await dispatch(
+            resetPassword(values.password, values.code)
+        );
+        if (success) {
             navigate("/login", { replace: true });
         }
     };

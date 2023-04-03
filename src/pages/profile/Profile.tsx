@@ -10,10 +10,6 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import {
-    deleteUserDataAction,
-    setUserDataAction,
-} from "../../services/actions/user";
 
 import OrdersPage from "../orders-page/OredersPage";
 
@@ -22,10 +18,12 @@ import {
     TEXT_INACTIVE_COLOR,
     TEXT_MEDIUM,
 } from "../../utils/constants";
-import { setCookie } from "../../utils/cookie";
 
 import styles from "./Profile.module.css";
-import { AppStateType } from "../../services/reducers/rootReducer";
+import {
+    AppStateType,
+    DispatchType,
+} from "../../services/reducers/rootReducer";
 import { useForm } from "../../hooks/useForm";
 import { exitUser, saveNewUserData } from "../../services/thunk/userThunk";
 
@@ -45,7 +43,7 @@ const Profile = () => {
         password: "",
     });
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<DispatchType>();
     const navigate = useNavigate();
 
     //Заполняем состояние форм данными из стора
@@ -62,26 +60,15 @@ const Profile = () => {
     };
 
     //Изменение данных
-    const onSubmitForm = async (e: React.FormEvent) => {
+    const onSubmitForm = (e: React.FormEvent) => {
         e.preventDefault();
-        const data = await saveNewUserData(
-            values.name,
-            values.email,
-            values.password
-        );
-        if (data.success === true) {
-            dispatch(setUserDataAction(data.user.email, data.user.name));
-            setValues({ name: userName, email: userEmail, password: "" });
-        }
+        dispatch(saveNewUserData(values.name, values.email, values.password));
     };
 
     //Выход из системы
     const onButtonExitClick = async () => {
-        const res = await exitUser();
-        if (res.success === true) {
-            dispatch(deleteUserDataAction());
-            setCookie("accessToken", null, { expires: -1 });
-            localStorage.setItem("refreshToken", "");
+        const success = await dispatch(exitUser());
+        if (success) {
             navigate("/", { replace: true });
         }
     };

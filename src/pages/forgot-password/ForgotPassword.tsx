@@ -17,6 +17,8 @@ import {
 import styles from "./ForgotPassword.module.css";
 import { useForm } from "../../hooks/useForm";
 import { sendPasswordOnEmail } from "../../services/thunk/userThunk";
+import { useDispatch } from "react-redux";
+import { DispatchType } from "../../services/reducers/rootReducer";
 
 const ForgotPassword = () => {
     const location = useLocation();
@@ -24,12 +26,13 @@ const ForgotPassword = () => {
     const { values, handleChange } = useForm({ email: "" });
 
     const navigate = useNavigate();
+    const dispatch = useDispatch<DispatchType>();
 
     //При клике на кнопку или нажатия enter отправляем запрос и если он успешный переадресуем пользователя на reset-password
     const onSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault();
-        const data = await sendPasswordOnEmail(values.email);
-        if (data.success === true) {
+        const success = await dispatch(sendPasswordOnEmail(values.email));
+        if (success) {
             navigate("/reset-password", { state: location });
         }
     };

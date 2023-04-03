@@ -4,10 +4,6 @@
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { setUserDataAction } from "../../services/actions/user";
-
-import { saveTokens } from "../../utils/burgerApi";
-
 import {
     Button,
     EmailInput,
@@ -24,6 +20,7 @@ import {
 import styles from "./Register.module.css";
 import { useForm } from "../../hooks/useForm";
 import { registerUser } from "../../services/thunk/userThunk";
+import { DispatchType } from "../../services/reducers/rootReducer";
 
 const Register = () => {
     //Состояние полей в форме
@@ -33,19 +30,15 @@ const Register = () => {
         password: "",
     });
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<DispatchType>();
     const navigate = useNavigate();
 
     const onSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault();
-        const data = await registerUser(
-            values.name,
-            values.email,
-            values.password
+        const success = await dispatch(
+            registerUser(values.name, values.email, values.password)
         );
-        if (data.success === true) {
-            saveTokens(data.refreshToken, data.accessToken);
-            dispatch(setUserDataAction(data.user.email, data.user.name));
+        if (success) {
             navigate("/", { replace: true });
         }
     };
