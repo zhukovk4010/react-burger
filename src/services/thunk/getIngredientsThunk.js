@@ -1,20 +1,21 @@
 //Функция запроса ингредиентов
 
-import { getIngredientsData } from "../../utils/burger-api";
-import { getIngredientsAC } from "../actions/ingredients";
-import { getIngredientsFailedAC } from "../actions/ingredients";
-import { getIngredientsSuccessAC } from "../actions/ingredients";
+//Импорты
+import { getIngredientsData } from "../../utils/burgerApi";
+import { getIngredientsAction } from "../actions/ingredients";
+import { getIngredientsFailedAction } from "../actions/ingredients";
+import { getIngredientsSuccessAction } from "../actions/ingredients";
 
 export const getIngredients = () => {
     return async (dispatch) => {
         //Вызываем первый диспатч, изменяем состояние загрузки
-        dispatch(getIngredientsAC());
+        dispatch(getIngredientsAction());
 
         try {
             const res = await getIngredientsData();
-            dispatch(getIngredientsSuccessAC(res.data));
+            dispatch(getIngredientsSuccessAction(res.data));
         } catch (err) {
-            dispatch(getIngredientsFailedAC());
+            dispatch(getIngredientsFailedAction());
         }
     };
 };

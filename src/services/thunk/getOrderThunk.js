@@ -1,15 +1,15 @@
 //Функция запроса заказа
 
-import { getOrderSuccessAC } from "../actions/order";
-import { getOrderAC } from "../actions/order";
-import { getOrderFailedAC } from "../actions/order";
-import { deleteSelectedIngredients } from "../actions/selectedIngredients";
-import { openOrderModalAC } from "../actions/modal";
-import { sendOrder } from "../../utils/burger-api";
+import { getOrderSuccessAction } from "../actions/order";
+import { getOrderAction } from "../actions/order";
+import { getOrderFailedAction } from "../actions/order";
+import { deleteSelectedIngredientsAction } from "../actions/selectedIngredients";
+import { openOrderModalAction } from "../actions/modal";
+import { sendOrder } from "../../utils/burgerApi";
 
 export const getOrder = (idList) => {
     return async (dispatch) => {
-        dispatch(getOrderAC());
+        dispatch(getOrderAction());
 
         try {
             const res = await sendOrder({
@@ -19,12 +19,12 @@ export const getOrder = (idList) => {
                 },
                 body: JSON.stringify({ ingredients: idList }),
             });
-            dispatch(getOrderSuccessAC(res));
-            dispatch(openOrderModalAC());
-            dispatch(deleteSelectedIngredients());
+            dispatch(getOrderSuccessAction(res));
+            dispatch(openOrderModalAction());
+            dispatch(deleteSelectedIngredientsAction());
         } catch (e) {
-            dispatch(getOrderFailedAC(e.name));
-            dispatch(openOrderModalAC());
+            dispatch(getOrderFailedAction(e.name));
+            dispatch(openOrderModalAction());
         }
     };
 };
