@@ -52,7 +52,7 @@ const Order = ({ order }: OrderPropsType) => {
     const date = new Date(order.createdAt);
 
     //Добавление 0 в дату, если число меньше 10
-    const addLeadingZero = (d: any) => {
+    const addLeadingZero = (d: number) => {
         return d < 10 ? "0" + d : d;
     };
 

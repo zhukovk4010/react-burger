@@ -1,7 +1,7 @@
 //Создание экшинов, связанных с пользователем
 
 //Импорты
-import { DELETE_USER_DATA, SET_USER_DATA } from "../../utils/constants";
+import { DELETE_USER_DATA, SET_USER_DATA } from "./actionsTypes";
 
 //Типы экшенов
 type SetUserDataActionType = {

@@ -13,11 +13,11 @@ import {
 import { setUserDataAction } from "../actions/user";
 import { getCookie, setCookie } from "../../utils/cookie";
 import { deleteUserDataAction } from "../actions/user";
-import { AppDispatchThunk, AppThunk } from "../../types/types";
+import { AppThunk } from "../../types/types";
 
 //Запрос пользователя
 export const getUser: AppThunk = () => {
-    return async (dispatch: AppDispatchThunk) => {
+    return async (dispatch) => {
         try {
             let user = await getUserRequest({
                 method: "GET",
@@ -38,7 +38,7 @@ export const getUser: AppThunk = () => {
 
 //Отправка email, для получения кода
 export const sendPasswordOnEmail: AppThunk = (email: string) => {
-    return async (dispatch: AppDispatchThunk) => {
+    return async (dispatch) => {
         try {
             const res = await sendEmail({
                 method: "POST",
@@ -59,7 +59,7 @@ export const sendPasswordOnEmail: AppThunk = (email: string) => {
 
 //Отправка данных для авторизации
 export const sendLoginData: AppThunk = (email: string, password: string) => {
-    return async (dispatch: AppDispatchThunk) => {
+    return async (dispatch) => {
         try {
             const res = await sendUserLogin({
                 method: "POST",
@@ -85,7 +85,7 @@ export const sendLoginData: AppThunk = (email: string, password: string) => {
 
 //Изменение пароля
 export const resetPassword: AppThunk = (newPassword: string, code: string) => {
-    return async (dispatch: AppDispatchThunk) => {
+    return async (dispatch) => {
         try {
             const res = await sendChangedPassword({
                 method: "POST",
@@ -113,7 +113,7 @@ export const registerUser: AppThunk = (
     email: string,
     password: string
 ) => {
-    return async (dispatch: AppDispatchThunk) => {
+    return async (dispatch) => {
         try {
             const res = await sendUserRegister({
                 method: "POST",
@@ -148,7 +148,7 @@ export const saveNewUserData: AppThunk = (
     if (password) {
         newPassword = password;
     }
-    return async (dispatch: AppDispatchThunk) => {
+    return async (dispatch) => {
         try {
             const res = await getUserRequest({
                 method: "PATCH",
@@ -178,7 +178,7 @@ export const saveNewUserData: AppThunk = (
 
 //Выход пользователя из аккаунта
 export const exitUser: AppThunk = () => {
-    return async (dispatch: AppDispatchThunk) => {
+    return async (dispatch) => {
         try {
             const res = await userLogout({
                 method: "POST",

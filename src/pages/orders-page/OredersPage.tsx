@@ -8,7 +8,6 @@ import styles from "./OredersPage.module.css";
 import { wsClose, wsConnect } from "../../services/actions/orders";
 import { WS_URL_USER } from "../../utils/constants";
 import { getCookie } from "../../utils/cookie";
-import { WsOrderType } from "../../types/types";
 
 const OrdersPage = () => {
     const dispatch = useAppDispatch();
@@ -30,7 +29,7 @@ const OrdersPage = () => {
     if (orders) {
         return (
             <section className={styles.ordersContainer}>
-                {orders.map((order: WsOrderType) => {
+                {orders.map((order) => {
                     return <Order key={order._id} order={order} />;
                 })}
             </section>

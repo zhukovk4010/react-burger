@@ -7,7 +7,7 @@ import { IngredientType } from "./../../types/types";
 import {
     DELETE_SELECTED_INGREDIENT_MODAL,
     ADD_SELECTED_INGREDIENT,
-} from "../../utils/constants";
+} from "../actions/actionsTypes";
 
 //Тип состояния
 type InitialStateType = {

@@ -5,7 +5,7 @@ import { IngredientType } from "../../types/types";
 import {
     ADD_SELECTED_INGREDIENT,
     DELETE_SELECTED_INGREDIENT_MODAL,
-} from "../../utils/constants";
+} from "./actionsTypes";
 
 //Типы экшенов
 type AddSelectedIngredientToModalType = {

@@ -1,16 +1,10 @@
 //взаимодействие с ws заказами
 
+//Импорты
+import { Middleware } from "redux";
 import { AppStateType } from "../store";
-import { AppDispatch } from "../../types/types";
-import {
-    wsClose,
-    wsConnecting,
-    wsError,
-    wsMessage,
-    wsOpen,
-} from "../actions/orders";
-import { Middleware, MiddlewareAPI } from "redux";
 
+//Типы
 type WsActionsType = {
     wsConnect: string;
     wsConnecting: string;
@@ -20,38 +14,43 @@ type WsActionsType = {
     wsError: string;
 };
 
-export const socketMiddleware = (wsActions: WsActionsType): Middleware => {
-    return (state: MiddlewareAPI<AppDispatch, AppStateType>) => {
+export const socketMiddleware = (
+    wsActions: WsActionsType
+): Middleware<{}, AppStateType> => {
+    return (state) => {
         //Создание объекта socket
         let socket: WebSocket | null = null;
+        const { wsConnect, wsConnecting, wsOpen, wsClose, wsMessage, wsError } =
+            wsActions;
 
         return (next) => (action) => {
             const { dispatch } = state;
             const { type, payload } = action;
+
             //Если тип экшена WS_CONNECT, тогда создаем новый ws объект
-            if (type === "WS_CONNECT") {
-                dispatch(wsConnecting());
+            if (type === wsConnect) {
+                dispatch({ type: wsConnecting });
                 socket = new WebSocket(payload);
             }
             if (socket) {
                 socket.onopen = () => {
-                    dispatch(wsOpen());
+                    dispatch({ type: wsOpen });
                 };
 
                 socket.onmessage = (event) => {
                     const data = JSON.parse(event.data);
-                    dispatch(wsMessage(data));
+                    dispatch({ type: wsMessage, payload: data });
                 };
 
                 socket.onerror = (event) => {
-                    dispatch(wsError(event));
+                    dispatch({ type: wsError, payload: event });
                 };
 
                 socket.onclose = () => {
-                    dispatch(wsClose);
+                    dispatch({ type: wsClose });
                 };
             }
-            if (type === "WS_CLOSE" && socket) {
+            if (type === wsClose && socket) {
                 socket.close();
             }
 

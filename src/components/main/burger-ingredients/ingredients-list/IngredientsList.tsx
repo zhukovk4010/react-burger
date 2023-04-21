@@ -6,8 +6,6 @@
 //Импорты
 import { useEffect, useMemo } from "react";
 
-import { IngredientType } from "../../../../types/types";
-
 import IngredientElement from "./ingredient-element/IngredientElement";
 
 import { TEXT_MEDIUM } from "../../../../utils/constants";
@@ -27,24 +25,15 @@ const IngredientsList = ({ setCurrent }: IngredientsListType) => {
 
     //Фильтрация ингредиентов по типу
     const bunsData = useMemo(
-        () =>
-            ingredients.ingredientsData.filter(
-                (ing: IngredientType) => ing.type === "bun"
-            ),
+        () => ingredients.ingredientsData.filter((ing) => ing.type === "bun"),
         [ingredients.ingredientsData]
     );
     const saucesData = useMemo(
-        () =>
-            ingredients.ingredientsData.filter(
-                (ing: IngredientType) => ing.type === "sauce"
-            ),
+        () => ingredients.ingredientsData.filter((ing) => ing.type === "sauce"),
         [ingredients.ingredientsData]
     );
     const fillingsData = useMemo(
-        () =>
-            ingredients.ingredientsData.filter(
-                (ing: IngredientType) => ing.type === "main"
-            ),
+        () => ingredients.ingredientsData.filter((ing) => ing.type === "main"),
         [ingredients.ingredientsData]
     );
 
@@ -103,7 +92,7 @@ const IngredientsList = ({ setCurrent }: IngredientsListType) => {
             <h3 id="bunsSection" className={`header ${TEXT_MEDIUM}`}>
                 Булки
             </h3>
-            {bunsData.map((ingredient: IngredientType) => {
+            {bunsData.map((ingredient) => {
                 return (
                     <IngredientElement
                         key={ingredient._id}
@@ -115,7 +104,7 @@ const IngredientsList = ({ setCurrent }: IngredientsListType) => {
             <h3 id="sauceSection" className={`header ${TEXT_MEDIUM}`}>
                 Соусы
             </h3>
-            {saucesData.map((ingredient: IngredientType) => {
+            {saucesData.map((ingredient) => {
                 return (
                     <IngredientElement
                         key={ingredient._id}
@@ -127,7 +116,7 @@ const IngredientsList = ({ setCurrent }: IngredientsListType) => {
             <h3 id="mainSection" className={`header ${TEXT_MEDIUM}`}>
                 Начинки
             </h3>
-            {fillingsData.map((ingredient: IngredientType) => {
+            {fillingsData.map((ingredient) => {
                 return (
                     <IngredientElement
                         key={ingredient._id}

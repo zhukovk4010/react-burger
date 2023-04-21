@@ -7,11 +7,11 @@ import { getOrderFailedAction } from "../actions/order";
 import { deleteSelectedIngredientsAction } from "../actions/selectedIngredients";
 import { openOrderModalAction } from "../actions/modal";
 import { getOrderApi, sendOrder } from "../../utils/burgerApi";
-import { AppDispatchThunk, AppThunk } from "../../types/types";
+import { AppThunk } from "../../types/types";
 import { getCookie } from "../../utils/cookie";
 
 export const getOrder: AppThunk = (idList: Array<string>) => {
-    return async (dispatch: AppDispatchThunk) => {
+    return async (dispatch) => {
         dispatch(getOrderAction());
 
         try {
@@ -36,7 +36,7 @@ export const getOrder: AppThunk = (idList: Array<string>) => {
 };
 
 export const getOrderFromApi: AppThunk = (number: string) => {
-    return async (dispatch: AppDispatchThunk) => {
+    return async (dispatch) => {
         try {
             const res = await getOrderApi(number, {
                 method: "GET",

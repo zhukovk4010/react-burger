@@ -51,8 +51,10 @@ const SelectedOrder = () => {
     let totalPrice: number = 0;
 
     //Добавление 0 в дату, если число меньше 10
-    const addLeadingZero = (d: any) => {
-        return d < 10 ? "0" + d : d;
+    const addLeadingZero = (d: number | undefined) => {
+        if (d) {
+            return d < 10 ? "0" + d : d;
+        }
     };
 
     if (order) {

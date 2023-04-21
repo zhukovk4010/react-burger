@@ -8,7 +8,7 @@ import {
     GET_ORDER_FROM_API,
     GET_ORDER_SUCCESS,
     ORDER_CLEAR,
-} from "../../utils/constants";
+} from "../actions/actionsTypes";
 import { WsOrderType } from "../../types/types";
 
 //Тип состояния

@@ -7,7 +7,7 @@ import {
     GET_INGREDIENTS,
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
-} from "../../utils/constants";
+} from "../actions/actionsTypes";
 
 //Тип initialState
 type InitialStateType = {

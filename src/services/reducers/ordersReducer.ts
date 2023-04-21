@@ -5,7 +5,7 @@ import {
     WS_ERROR,
     WS_MESSAGE,
     WS_OPEN,
-} from "../../utils/constants";
+} from "../actions/actionsTypes";
 import { OrdersTypes } from "./../actions/orders";
 //Редюсер заказов
 

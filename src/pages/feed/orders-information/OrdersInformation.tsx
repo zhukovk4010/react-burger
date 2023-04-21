@@ -8,7 +8,6 @@ import {
     TEXT_MEDIUM,
 } from "../../../utils/constants";
 import styles from "./OrdersInformation.module.css";
-import { WsOrderType } from "../../../types/types";
 
 const OrdersInformation = () => {
     const { orders, totalOrders, totalTodayOrders } = useAppSelector(
@@ -21,12 +20,12 @@ const OrdersInformation = () => {
 
     //Готовые заказы
     const readyOrders = orders.orders.filter(
-        (order: WsOrderType) => order.status === "done"
+        (order) => order.status === "done"
     );
 
     //Заказы в работе
     const notReadyOrders = orders.orders.filter(
-        (order: WsOrderType) => order.status !== "done"
+        (order) => order.status !== "done"
     );
 
     //Вытаскиваем первые 10 заказов для колонок
@@ -39,7 +38,7 @@ const OrdersInformation = () => {
                 <div>
                     <h3 className={`${TEXT_MEDIUM} mb-6`}>Готовы:</h3>
                     <div className={styles.ordersNumbers}>
-                        {firstTenReadyOrders.map((order: WsOrderType) => {
+                        {firstTenReadyOrders.map((order) => {
                             return (
                                 <div
                                     key={order._id}
@@ -54,7 +53,7 @@ const OrdersInformation = () => {
                 <div>
                     <h3 className={`${TEXT_MEDIUM} mb-6`}>В работе:</h3>
                     <div className={styles.ordersNumbers}>
-                        {firstTenNotReadyOrders.map((order: WsOrderType) => {
+                        {firstTenNotReadyOrders.map((order) => {
                             return (
                                 <div
                                     key={order._id}

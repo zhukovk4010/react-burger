@@ -4,7 +4,6 @@
 import styles from "./OrdersFeed.module.css";
 import Order from "../../../components/order/Order";
 import { useAppSelector } from "../../../hooks/hooks";
-import { WsOrderType } from "../../../types/types";
 
 const OrdersFeed = () => {
     const { orders } = useAppSelector((state) => ({
@@ -13,7 +12,7 @@ const OrdersFeed = () => {
 
     return (
         <section className={styles.ordersContainer}>
-            {orders.map((order: WsOrderType) => {
+            {orders.map((order) => {
                 return <Order key={order._id} order={order} />;
             })}
         </section>

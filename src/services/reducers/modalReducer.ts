@@ -9,7 +9,7 @@ import {
     CLOSE_INGREDIENT_MODAL,
     OPEN_ORDER_DETAILS_MODAL,
     CLOSE_ORDER_DETAILS_MODAL,
-} from "../../utils/constants";
+} from "../actions/actionsTypes";
 
 //Тип начального состояния
 type InitialStateType = {

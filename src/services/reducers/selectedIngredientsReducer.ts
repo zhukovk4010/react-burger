@@ -9,7 +9,7 @@ import {
     UPDATE_SELECTED_INGREDIENTS,
     DELETE_SELECTED_INGREDIENT,
     DELETE_SELECTED_INGREDIENTS,
-} from "../../utils/constants";
+} from "../actions/actionsTypes";
 
 //Тип выбранного ингредиента
 type SelectedIngredientType = {

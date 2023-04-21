@@ -4,11 +4,11 @@
 import { WsOrderType } from "../../types/types";
 import {
     GET_ORDER,
-    GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
+    GET_ORDER_SUCCESS,
     GET_ORDER_FROM_API,
     ORDER_CLEAR,
-} from "../../utils/constants";
+} from "./actionsTypes";
 
 //Типы экшенов
 type GetOrderActionType = {

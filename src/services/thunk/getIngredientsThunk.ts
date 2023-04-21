@@ -5,10 +5,10 @@ import { getIngredientsData } from "../../utils/burgerApi";
 import { getIngredientsAction } from "../actions/ingredients";
 import { getIngredientsFailedAction } from "../actions/ingredients";
 import { getIngredientsSuccessAction } from "../actions/ingredients";
-import { AppDispatchThunk, AppThunk } from "../../types/types";
+import { AppThunk } from "../../types/types";
 
 export const getIngredients: AppThunk = () => {
-    return async (dispatch: AppDispatchThunk) => {
+    return async (dispatch) => {
         //Вызываем первый диспатч, изменяем состояние загрузки
         dispatch(getIngredientsAction());
 

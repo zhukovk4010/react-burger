@@ -12,7 +12,7 @@ import {
     WS_ERROR,
     WS_MESSAGE,
     WS_OPEN,
-} from "../utils/constants";
+} from "./actions/actionsTypes";
 
 //Активируем ReduxDevTools
 

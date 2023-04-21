@@ -8,7 +8,7 @@ import {
     WS_ERROR,
     WS_MESSAGE,
     WS_OPEN,
-} from "../../utils/constants";
+} from "./actionsTypes";
 
 //Типы
 type WsConnectType = {
