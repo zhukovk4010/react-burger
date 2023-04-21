@@ -5,15 +5,14 @@
 
 //Импорты
 import { useEffect, useMemo } from "react";
-import { useSelector } from "react-redux";
 
-import { AppStateType } from "../../../../services/reducers/rootReducer";
 import { IngredientType } from "../../../../types/types";
 
 import IngredientElement from "./ingredient-element/IngredientElement";
 
 import { TEXT_MEDIUM } from "../../../../utils/constants";
 import styles from "./IngredientsList.module.css";
+import { useAppSelector } from "../../../../hooks/hooks";
 
 //Типы
 type IngredientsListType = {
@@ -22,7 +21,7 @@ type IngredientsListType = {
 
 const IngredientsList = ({ setCurrent }: IngredientsListType) => {
     //Получаем из стора секцию с ингредиентами, секцию модального окна, секцию выбранных ингредиентов, выбранный элемент
-    const { ingredients } = useSelector((state: AppStateType) => ({
+    const { ingredients } = useAppSelector((state) => ({
         ingredients: state.ingredients,
     }));
 

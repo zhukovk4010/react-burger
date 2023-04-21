@@ -1,7 +1,6 @@
 //Компонент авторизации в приложение
 
 //Импорты
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
@@ -20,7 +19,7 @@ import {
 import styles from "./Register.module.css";
 import { useForm } from "../../hooks/useForm";
 import { registerUser } from "../../services/thunk/userThunk";
-import { DispatchType } from "../../services/reducers/rootReducer";
+import { useAppDispatch } from "../../hooks/hooks";
 
 const Register = () => {
     //Состояние полей в форме
@@ -30,15 +29,15 @@ const Register = () => {
         password: "",
     });
 
-    const dispatch = useDispatch<DispatchType>();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const onSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault();
         const success = await dispatch(
-            registerUser(values.name, values.email, values.password)
+            registerUser(values.name!, values.email!, values.password!)
         );
-        if (success) {
+        if (success!) {
             navigate("/", { replace: true });
         }
     };

@@ -2,8 +2,6 @@
 //При клике вызывается модальное окно с информацией о заказе
 
 //Импорты
-import { useDispatch, useSelector } from "react-redux";
-
 import { getOrder } from "../../../../services/thunk/getOrderThunk";
 
 import { closeOrderModalAction } from "../../../../services/actions/modal";
@@ -19,10 +17,7 @@ import { TEXT_MEDIUM } from "../../../../utils/constants";
 import styles from "./Information.module.css";
 import OrderError from "./order-error/OrderError";
 import { useNavigate } from "react-router";
-import {
-    AppStateType,
-    DispatchType,
-} from "../../../../services/reducers/rootReducer";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/hooks";
 
 //Типы
 type InformationPropsTypes = {
@@ -31,8 +26,8 @@ type InformationPropsTypes = {
 
 const Information = ({ totalPrice }: InformationPropsTypes) => {
     //Получаем нужные данные из state
-    const { selectedIngredients, modal, order, auth } = useSelector(
-        (state: AppStateType) => ({
+    const { selectedIngredients, modal, order, auth } = useAppSelector(
+        (state) => ({
             selectedIngredients: state.selectedIngredients,
             modal: state.modal,
             order: state.order,
@@ -40,7 +35,7 @@ const Information = ({ totalPrice }: InformationPropsTypes) => {
         })
     );
 
-    const dispatch = useDispatch<DispatchType>();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     //Создание запроса
@@ -82,9 +77,7 @@ const Information = ({ totalPrice }: InformationPropsTypes) => {
                     {order.hasError ? (
                         <OrderError errorName={order.errorName} />
                     ) : (
-                        <OrderDetails
-                            orderNumber={order.orderData?.numberOrder}
-                        />
+                        <OrderDetails orderNumber={order.numberOrder} />
                     )}
                 </Modal>
             )}

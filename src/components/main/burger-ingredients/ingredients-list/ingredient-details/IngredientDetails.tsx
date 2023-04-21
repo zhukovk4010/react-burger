@@ -1,10 +1,7 @@
 //Компонент деталец выбранного ингредиента, передается в модальное окно
 
 //Импорты
-import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router";
-
-import { AppStateType } from "../../../../../services/reducers/rootReducer";
 
 import {
     DIGITS_DEFAULT,
@@ -14,11 +11,12 @@ import {
     TEXT_MEDIUM,
 } from "../../../../../utils/constants";
 import styles from "./IngredientDetails.module.css";
+import { useAppSelector } from "../../../../../hooks/hooks";
 
 const IngredientDetails = () => {
     const location = useLocation();
     const { id } = useParams();
-    const { ingredientsData } = useSelector((state: AppStateType) => ({
+    const { ingredientsData } = useAppSelector((state) => ({
         ingredientsData: state.ingredients.ingredientsData,
     }));
 

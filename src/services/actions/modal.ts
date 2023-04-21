@@ -6,6 +6,8 @@ import {
     OPEN_INGREDIENT_MODAL,
     CLOSE_ORDER_MODAL,
     CLOSE_INGREDIENT_MODAL,
+    OPEN_ORDER_DETAILS_MODAL,
+    CLOSE_ORDER_DETAILS_MODAL,
 } from "../../utils/constants";
 
 //Типы экшенов
@@ -25,11 +27,21 @@ type CloseIngredientModalActionType = {
     type: typeof CLOSE_INGREDIENT_MODAL;
 };
 
+type OpenOrderDetailsModalActionType = {
+    type: typeof OPEN_ORDER_DETAILS_MODAL;
+};
+
+type CloseOrderDetailsModalActionType = {
+    type: typeof CLOSE_ORDER_DETAILS_MODAL;
+};
+
 export type ModalActionsTypes =
     | OpenOrderModalActionType
     | OpenIngredientModalActionType
     | CloseOrderModalActionType
-    | CloseIngredientModalActionType;
+    | CloseIngredientModalActionType
+    | OpenOrderDetailsModalActionType
+    | CloseOrderDetailsModalActionType;
 
 //Экшены
 
@@ -51,3 +63,13 @@ export const closeOrderModalAction = (): CloseOrderModalActionType => ({
 //Экшен закрытия модального окна ингредиента
 export const closeIngredientModalAction =
     (): CloseIngredientModalActionType => ({ type: CLOSE_INGREDIENT_MODAL });
+
+//Экшен открытия модального окна выбранного заказа из ленты
+export const openOrderDetailsModalAction =
+    (): OpenOrderDetailsModalActionType => ({ type: OPEN_ORDER_DETAILS_MODAL });
+
+//Экшен закртыия модального окна выбранного заказа из ленты
+export const closeOrderDetailsModalAction =
+    (): CloseOrderDetailsModalActionType => ({
+        type: CLOSE_ORDER_DETAILS_MODAL,
+    });

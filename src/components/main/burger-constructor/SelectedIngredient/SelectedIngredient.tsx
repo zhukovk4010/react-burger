@@ -2,7 +2,6 @@
 
 //Импорты
 import { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useDrag, useDrop } from "react-dnd";
 
 import { deleteSelectedIngredientAction } from "../../../../services/actions/selectedIngredients";
@@ -13,7 +12,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./SelectedIngredient.module.css";
 import { SelectedIngredientType } from "../../../../types/types";
-import { AppStateType } from "../../../../services/reducers/rootReducer";
+import { useAppDispatch, useAppSelector } from "../../../../hooks/hooks";
 
 //Типы
 type SelectedIngredientPropsType = {
@@ -27,10 +26,10 @@ const SelectedIngredient = ({
     ingredient,
     moveCard,
 }: SelectedIngredientPropsType) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     //Вытаскиваем секцию выбранных ингредиентов из хранилища
-    const { selectedIngredientsData } = useSelector((state: AppStateType) => ({
+    const { selectedIngredientsData } = useAppSelector((state) => ({
         selectedIngredientsData:
             state.selectedIngredients.selectedIngredientsData,
     }));

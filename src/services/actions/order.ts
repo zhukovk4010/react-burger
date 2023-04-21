@@ -1,11 +1,13 @@
 //Создание экшенов, связанных с созданием заказа
 
 //Импорты
-import { OrderType } from "../../types/types";
+import { WsOrderType } from "../../types/types";
 import {
     GET_ORDER,
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
+    GET_ORDER_FROM_API,
+    ORDER_CLEAR,
 } from "../../utils/constants";
 
 //Типы экшенов
@@ -20,14 +22,24 @@ type GetOrderFailedActionType = {
 
 type GetOrderSuccessActionType = {
     type: typeof GET_ORDER_SUCCESS;
-    name: string;
-    numberOrder: number;
+    number: number;
+};
+
+type GetOrderFromApiType = {
+    type: typeof GET_ORDER_FROM_API;
+    order: WsOrderType;
+};
+
+type OrderClear = {
+    type: typeof ORDER_CLEAR;
 };
 
 export type OrderActionsTypes =
     | GetOrderActionType
     | GetOrderFailedActionType
-    | GetOrderSuccessActionType;
+    | GetOrderSuccessActionType
+    | GetOrderFromApiType
+    | OrderClear;
 
 //Экшены
 
@@ -44,9 +56,20 @@ export const getOrderFailedAction = (
 
 //Экшен при удачной попытки получить заказ
 export const getOrderSuccessAction = (
-    order: OrderType
+    payload: number
 ): GetOrderSuccessActionType => ({
     type: GET_ORDER_SUCCESS,
-    name: order.name,
-    numberOrder: order.order.number,
+    number: payload,
+});
+
+//Получение заказа из API
+export const getOrderFromApiAction = (
+    payload: WsOrderType
+): GetOrderFromApiType => ({
+    type: GET_ORDER_FROM_API,
+    order: payload,
+});
+
+export const orderClear = (): OrderClear => ({
+    type: ORDER_CLEAR,
 });

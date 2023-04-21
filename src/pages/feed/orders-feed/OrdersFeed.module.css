@@ -1,0 +1,35 @@
+.ordersContainer {
+    height: 756px;
+    overflow-y: scroll;
+}
+
+.ordersContainer::-webkit-scrollbar {
+    width: 8px;
+    height: 0;
+}
+
+.ordersContainer::-webkit-scrollbar-track {
+    background: #2f2f37;
+    border-radius: 5px;
+    height: 45vh;
+}
+
+.ordersContainer::-webkit-scrollbar-thumb {
+    background: #8585ad;
+    border-radius: 5px;
+}
+
+.itemsList {
+    display: flex;
+    flex-direction: row-reverse;
+    width: fit-content;
+    color: white;
+}
+
+.itemsPicture {
+    margin-left: -16px;
+}
+
+.items_list > .items_picture:last-child {
+    margin-left: 0;
+}

@@ -1,0 +1,11 @@
+.feedContainer {
+    margin: 0 auto;
+    width: 1240px;
+}
+
+.mainContent {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 60px;
+}

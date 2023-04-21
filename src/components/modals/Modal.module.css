@@ -8,8 +8,7 @@
     width: 720px;
     height: auto;
     border-radius: 40px;
-    background: #1C1C21;
-    
+    background: #1c1c21;
 }
 
 .titleAndButton {
@@ -36,4 +35,8 @@
     border: none;
 }
 
-
+.orderButtonClose {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}

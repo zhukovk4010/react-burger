@@ -1,23 +1,29 @@
-import { useSelector } from "react-redux";
+//Защищенный маршрут
 import { Navigate, useLocation } from "react-router";
-import { AppStateType } from "../../services/reducers/rootReducer";
+import { useAppSelector } from "../../hooks/hooks";
 
 type ProtectedRouteElementPropsType = {
+    background?: Location;
     element: React.ReactNode;
     anonymous?: boolean;
 };
 
 const ProtectedRouteElement = ({
+    background,
     element,
     anonymous = false,
 }: ProtectedRouteElementPropsType) => {
-    const { auth } = useSelector((state: AppStateType) => ({
+    const { auth } = useAppSelector((state) => ({
         auth: state.user.isAuthenticated,
     }));
     const location = useLocation();
-    const from = location.state?.from || "/";
+
+    if (background && !auth) {
+        return null;
+    }
 
     if (anonymous && auth) {
+        const from = location.state?.from || "/";
         return <Navigate to={from} />;
     }
 

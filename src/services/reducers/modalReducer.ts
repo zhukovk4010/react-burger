@@ -7,18 +7,22 @@ import {
     CLOSE_ORDER_MODAL,
     OPEN_ORDER_MODAL,
     CLOSE_INGREDIENT_MODAL,
+    OPEN_ORDER_DETAILS_MODAL,
+    CLOSE_ORDER_DETAILS_MODAL,
 } from "../../utils/constants";
 
 //Тип начального состояния
 type InitialStateType = {
     openIngredientDetailsModal: boolean;
     openOrderModal: boolean;
+    openOrderDetailsModal: boolean;
 };
 
 //Начальное состояние
 const initialState: InitialStateType = {
     openIngredientDetailsModal: false,
     openOrderModal: false,
+    openOrderDetailsModal: false,
 };
 
 const modalReducer = (
@@ -49,6 +53,18 @@ const modalReducer = (
             return {
                 ...state,
                 openIngredientDetailsModal: false,
+            };
+        //Открытие модального окна детального описания заказа из ленты
+        case OPEN_ORDER_DETAILS_MODAL:
+            return {
+                ...state,
+                openOrderDetailsModal: true,
+            };
+        //Закрытие модального окна детального описания заказа из ленты
+        case CLOSE_ORDER_DETAILS_MODAL:
+            return {
+                ...state,
+                openOrderDetailsModal: false,
             };
         default:
             return state;

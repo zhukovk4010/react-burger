@@ -1,0 +1,79 @@
+.orderContainer {
+    padding: 40px;
+}
+
+.title {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.burgerName {
+    margin-bottom: 12px;
+}
+
+.status {
+    color: #00cccc;
+    margin-bottom: 60px;
+}
+
+.orderCompound {
+    height: 366px;
+    overflow-y: scroll;
+}
+
+.orderCompound::-webkit-scrollbar {
+    width: 8px;
+    height: 0;
+}
+
+.orderCompound::-webkit-scrollbar-track {
+    background: #2f2f37;
+    border-radius: 5px;
+    height: 45vh;
+}
+
+.orderCompound::-webkit-scrollbar-thumb {
+    background: #8585ad;
+    border-radius: 5px;
+}
+
+.information {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 40px;
+}
+
+.orderTime {
+    display: grid;
+    justify-self: start;
+}
+
+.totalPrice {
+    display: grid;
+    grid-template-columns: auto 22px;
+    align-items: center;
+    justify-items: end;
+    gap: 10px;
+}
+
+.ingredientInformation {
+    display: grid;
+    grid-template-columns: 64px auto;
+    width: max-content;
+    margin-right: 24px;
+    margin-bottom: 16px;
+}
+
+.nameAndPriceContainer {
+    margin-left: 16px;
+    align-items: center;
+    display: grid;
+    width: 542px;
+    grid-template-columns: 380px 146px;
+    gap: 16px;
+}
+
+.orderContainerNoModal {
+    margin: 0 auto;
+    width: 640px;
+}

@@ -3,7 +3,6 @@
 //Можно перетаскивать ингредиенты
 
 //Импорты
-import { useDispatch, useSelector } from "react-redux";
 import { useDrag } from "react-dnd";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
@@ -13,13 +12,13 @@ import { openIngredientModalAction } from "../../../../../services/actions/modal
 import { TEXT_DEFAULT } from "../../../../../utils/constants";
 
 import { IngredientType } from "../../../../../types/types";
-import { AppStateType } from "../../../../../services/reducers/rootReducer";
 
 import {
     Counter,
     CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./IngredientElement.module.css";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks/hooks";
 
 //Типы
 type IngredientElementPropsType = {
@@ -28,11 +27,11 @@ type IngredientElementPropsType = {
 
 const IngredientElement = ({ ingredient }: IngredientElementPropsType) => {
     const location = useLocation();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const id = ingredient["_id"];
 
     //Выбираем секцию выбранных ингредиентов в конструкторе из хранилища
-    const { selectedIngredients } = useSelector((state: AppStateType) => ({
+    const { selectedIngredients } = useAppSelector((state) => ({
         selectedIngredients: state.selectedIngredients,
     }));
 
