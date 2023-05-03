@@ -5,8 +5,9 @@ import { getIngredientsData } from "../../utils/burgerApi";
 import { getIngredientsAction } from "../actions/ingredients";
 import { getIngredientsFailedAction } from "../actions/ingredients";
 import { getIngredientsSuccessAction } from "../actions/ingredients";
+import { AppThunk } from "../../types/types";
 
-export const getIngredients = () => {
+export const getIngredients: AppThunk = () => {
     return async (dispatch) => {
         //Вызываем первый диспатч, изменяем состояние загрузки
         dispatch(getIngredientsAction());
@@ -14,7 +15,7 @@ export const getIngredients = () => {
         try {
             const res = await getIngredientsData();
             dispatch(getIngredientsSuccessAction(res.data));
-        } catch (err) {
+        } catch (e) {
             dispatch(getIngredientsFailedAction());
         }
     };

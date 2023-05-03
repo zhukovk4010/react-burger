@@ -1,9 +1,23 @@
 body {
-  margin: 0;
-  background-color: #131316;
-  color: #F2F2F3;
+    margin: 0;
+    background-color: #131316;
+    color: #f2f2f3;
 }
 
 .colorInActive {
-  color: #8585AD;
+    color: #8585ad;
+}
+
+.items_picture {
+    margin-left: -16px;
+}
+
+:root {
+    --shadow-box-color_modal: rgba(0, 0, 0, 0.04);
+    --border-color_modal: rgba(76, 76, 255, 0.2);
+    --bg-color_overlay: rgba(0, 0, 0, 0.6);
+    --bg-color_element: #1c1c21;
+    --text-color_ready: #00cccc;
+    --gradient-color_1: #4c4cff;
+    --gradient-color_2: #801ab2;
 }

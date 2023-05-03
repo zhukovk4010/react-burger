@@ -19,7 +19,7 @@ const AppHeader = () => {
                         />
                     </NavLink>
 
-                    <NavLink to="/" className={styles.link}>
+                    <NavLink to="/feed" className={styles.link}>
                         <NavigationLink
                             iconType="ListIcon"
                             name="Лента заказов"

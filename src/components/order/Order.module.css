@@ -1,0 +1,67 @@
+.orderContainer {
+    width: auto;
+    min-height: 166px;
+    padding: 24px;
+    background-color: #1c1c21;
+    border-radius: 40px;
+    margin-right: 8px;
+    margin-bottom: 16px;
+}
+
+.orderInformation {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding-bottom: 24px;
+}
+
+.orderNumber {
+    display: grid;
+    justify-self: start;
+}
+
+.orderTime {
+    display: grid;
+    justify-self: end;
+}
+
+.burgerName {
+    padding-bottom: 8px;
+}
+
+.orderDetails {
+    display: grid;
+    grid-template-columns: 426px auto;
+    gap: 24px;
+    height: 64px;
+}
+
+.itemsList {
+    display: flex;
+    flex-direction: row-reverse;
+    width: fit-content;
+    color: white;
+    margin-left: 16px;
+}
+
+.totalPrice {
+    display: grid;
+    grid-template-columns: auto 22px;
+    align-items: center;
+    justify-items: end;
+    gap: 10px;
+}
+
+.link {
+    text-decoration: none;
+    color: white;
+    color: inherit;
+}
+
+.activeStatus {
+    color: aqua;
+    margin-bottom: 24px;
+}
+
+.inActiveStatus {
+    margin-bottom: 24px;
+}

@@ -42,6 +42,11 @@ export const sendOrder = (data: RequestInit) => {
     return fetch(`${URL_API}/orders`, data).then(checkResponse);
 };
 
+//Запрос заказа
+export const getOrderApi = (orderNumber: string, data: RequestInit) => {
+    return fetch(`${URL_API}/orders/${orderNumber}`, data).then(checkResponse);
+};
+
 //Отправка email
 export const sendEmail = (data: RequestInit) => {
     return fetch(`${URL_API}/password-reset`, data).then(checkResponse);
@@ -71,27 +76,26 @@ export const userLogout = (data: RequestInit) => {
 export const getUserRequest = async (data: RequestInit) => {
     try {
         //Получение данных
-        const res = await fetch(`${URL_API}/auth/user`, data);
-        const user = await checkResponse(res);
-        return user;
-    } catch (e: unknown) {
-        if (e instanceof Error) {
-            //Если аксесс токен просрочен, тогда обновляем его
-            if (e.message === "jwt expired") {
-                const { refreshToken, accessToken } =
-                    await refreshTokenRequest();
-                saveTokens(refreshToken, accessToken);
-                const headersInit: HeadersInit = {};
-                data.headers = headersInit;
-                data.headers!.authorization = accessToken;
+        const res = await fetch(`${URL_API}/auth/user`, data).then(
+            checkResponse
+        );
 
-                //Получаем пользователя через новые данные
-                const res = await fetch(`${URL_API}/auth/user`, data);
-                const user = await checkResponse(res);
-                return user;
-            } else {
-                return Promise.reject(e);
-            }
+        return res;
+    } catch (e: any) {
+        if (e.message === "jwt expired") {
+            //Если аксесс токен просрочен, тогда обновляем его
+            const { refreshToken, accessToken } = await refreshTokenRequest();
+            saveTokens(refreshToken, accessToken);
+            const headersInit: HeadersInit = {};
+            data.headers = headersInit;
+            data.headers!.authorization = accessToken;
+
+            //Получаем пользователя через новые данные
+            const res = await fetch(`${URL_API}/auth/user`, data);
+            const user = await checkResponse(res);
+            return user;
+        } else {
+            return Promise.reject(e);
         }
     }
 };

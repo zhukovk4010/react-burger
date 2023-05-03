@@ -1,0 +1,45 @@
+//Типы экшенов
+
+//Ingredients actions
+export const GET_INGREDIENTS = "GET_INGREDIENTS";
+export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
+export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
+
+//Modal actions
+export const OPEN_ORDER_MODAL = "OPEN_ORDER_MODAL";
+export const OPEN_INGREDIENT_MODAL = "OPEN_ORDER_MODAL";
+export const OPEN_ORDER_DETAILS_MODAL = "OPEN_ORDER_MODAL";
+export const CLOSE_ORDER_MODAL = "CLOSE_ORDER_MODAL";
+export const CLOSE_INGREDIENT_MODAL = "CLOSE_ORDER_MODAL";
+export const CLOSE_ORDER_DETAILS_MODAL = "CLOSE_ORDER_MODAL";
+
+//Order actions
+export const GET_ORDER = "GET_ORDER";
+export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
+export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
+export const GET_ORDER_FROM_API = "GET_ORDER_FROM_API";
+export const ORDER_CLEAR = "ORDER_CLEAR";
+
+//Orders actions
+export const WS_CLOSE = "WS_CLOSE";
+export const WS_CONNECT = "WS_CONNECT";
+export const WS_CONNECTING = "WS_CONNECTING";
+export const WS_ERROR = "WS_ERROR";
+export const WS_MESSAGE = "WS_MESSAGE";
+export const WS_OPEN = "WS_OPEN";
+
+//SelectedIngredient actions
+export const ADD_SELECTED_INGREDIENT = "ADD_SELECTED_INGREDIENT";
+export const DELETE_SELECTED_INGREDIENT_MODAL =
+    "DELETE_SELECTED_INGREDIENT_MODAL";
+
+//SelectedIngredients actions
+export const ADD_BUN = "ADD_BUN";
+export const ADD_INGREDIENT = "ADD_INGREDIENT";
+export const DELETE_SELECTED_INGREDIENT = "DELETE_SELECTED_INGREDIENT";
+export const DELETE_SELECTED_INGREDIENTS = "DELETE_SELECTED_INGREDIENTS";
+export const UPDATE_SELECTED_INGREDIENTS = "UPDATE_SELECTED_INGREDIENTS";
+
+//User actions
+export const DELETE_USER_DATA = "DELETE_USER_DATA";
+export const SET_USER_DATA = "SET_USER_DATA";

@@ -6,7 +6,6 @@
 //Импорты
 import { useCallback, useMemo } from "react";
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
 
 import { addSelectedIngredientAction } from "../../../services/actions/selectedIngredients";
 import { updateSelectedIngredients } from "../../../services/actions/selectedIngredients";
@@ -18,18 +17,15 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 
 import styles from "./BurgerConstructor.module.css";
 import { TEXT_MEDIUM } from "../../../utils/constants";
-import {
-    AppStateType,
-    DispatchType,
-} from "../../../services/reducers/rootReducer";
+import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 
 const BurgerConstructor = () => {
     //Вытаскиваем секцию выбранных элементов из хранилища
-    const { selectedIngredients } = useSelector((state: AppStateType) => ({
+    const { selectedIngredients } = useAppSelector((state) => ({
         selectedIngredients: state.selectedIngredients,
     }));
 
-    const dispatch = useDispatch<DispatchType>();
+    const dispatch = useAppDispatch();
 
     //Вычесление итоговой стоимости
     const totalPrice = useMemo(() => {

@@ -1,7 +1,6 @@
 //Компонент кнопки в навигации
 
 //Импорты
-import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 
 import {
@@ -11,7 +10,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { TEXT_DEFAULT } from "../../../utils/constants";
 import styles from "./NavigationButton.module.css";
-import { AppStateType } from "../../../services/reducers/rootReducer";
 
 //Типы
 type NavigationButtonPropsType = {
@@ -20,10 +18,6 @@ type NavigationButtonPropsType = {
 };
 
 const NavigationButton = ({ iconType, name }: NavigationButtonPropsType) => {
-    const { selectedIngredient } = useSelector((store: AppStateType) => ({
-        selectedIngredient: store.selectedIngredient,
-    }));
-
     const location = useLocation();
     const activeIconRoute = location.pathname;
     return (
@@ -33,7 +27,7 @@ const NavigationButton = ({ iconType, name }: NavigationButtonPropsType) => {
                     <BurgerIcon
                         type={
                             activeIconRoute === "/" ||
-                            selectedIngredient.selectedIngredient !== null
+                            activeIconRoute.includes("/ingredients")
                                 ? "primary"
                                 : "secondary"
                         }
@@ -41,7 +35,7 @@ const NavigationButton = ({ iconType, name }: NavigationButtonPropsType) => {
                     <p
                         className={
                             activeIconRoute === "/" ||
-                            selectedIngredient.selectedIngredient !== null
+                            activeIconRoute.includes("/ingredients")
                                 ? `${TEXT_DEFAULT} ${styles.activeLinkName}`
                                 : `${TEXT_DEFAULT} ${styles.linkName}`
                         }
@@ -54,14 +48,16 @@ const NavigationButton = ({ iconType, name }: NavigationButtonPropsType) => {
                 <>
                     <ListIcon
                         type={
-                            activeIconRoute === "/order-feed"
+                            activeIconRoute === "/feed" ||
+                            activeIconRoute.includes("/feed")
                                 ? "primary"
                                 : "secondary"
                         }
                     />
                     <p
                         className={
-                            activeIconRoute === "/order-feed"
+                            activeIconRoute === "/feed" ||
+                            activeIconRoute.includes("/feed")
                                 ? `${TEXT_DEFAULT} ${styles.activeLinkName}`
                                 : `${TEXT_DEFAULT} ${styles.linkName}`
                         }
@@ -75,7 +71,8 @@ const NavigationButton = ({ iconType, name }: NavigationButtonPropsType) => {
                     <ProfileIcon
                         type={
                             activeIconRoute === "/profile" ||
-                            activeIconRoute === "/profile/orders"
+                            activeIconRoute === "/profile/orders" ||
+                            activeIconRoute.includes("/profile/orders")
                                 ? "primary"
                                 : "secondary"
                         }
@@ -83,7 +80,8 @@ const NavigationButton = ({ iconType, name }: NavigationButtonPropsType) => {
                     <p
                         className={
                             activeIconRoute === "/profile" ||
-                            activeIconRoute === "/profile/orders"
+                            activeIconRoute === "/profile/orders" ||
+                            activeIconRoute.includes("/profile/orders")
                                 ? `${TEXT_DEFAULT} ${styles.activeLinkName}`
                                 : `${TEXT_DEFAULT} ${styles.linkName}`
                         }

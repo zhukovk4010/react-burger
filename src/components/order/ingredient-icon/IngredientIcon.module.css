@@ -1,0 +1,26 @@
+.container {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    border-radius: 100px;
+    border: 2px solid transparent;
+    box-sizing: border-box;
+    background: linear-gradient(
+                var(--bg-color_element),
+                var(--bg-color_element)
+            )
+            content-box,
+        linear-gradient(var(--gradient-color_1), var(--gradient-color_2))
+            border-box;
+}
+
+.picture {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.overflow {
+    background: var(--bg-color_overlay) content-box;
+}

@@ -8,7 +8,6 @@ import {
     Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import OrdersPage from "../orders-page/OredersPage";
@@ -20,19 +19,16 @@ import {
 } from "../../utils/constants";
 
 import styles from "./Profile.module.css";
-import {
-    AppStateType,
-    DispatchType,
-} from "../../services/reducers/rootReducer";
 import { useForm } from "../../hooks/useForm";
 import { exitUser, saveNewUserData } from "../../services/thunk/userThunk";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 
 const Profile = () => {
     const location = useLocation();
     const activeLink = location.pathname;
 
     //Получаем email и пароль пользователя из стора
-    const { userEmail, userName } = useSelector((state: AppStateType) => ({
+    const { userEmail, userName } = useAppSelector((state) => ({
         userEmail: state.user.email,
         userName: state.user.name,
     }));
@@ -43,7 +39,7 @@ const Profile = () => {
         password: "",
     });
 
-    const dispatch = useDispatch<DispatchType>();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     //Заполняем состояние форм данными из стора
@@ -62,13 +58,15 @@ const Profile = () => {
     //Изменение данных
     const onSubmitForm = (e: React.FormEvent) => {
         e.preventDefault();
-        dispatch(saveNewUserData(values.name, values.email, values.password));
+        dispatch(
+            saveNewUserData(values.name!, values.email!, values.password!)
+        );
     };
 
     //Выход из системы
     const onButtonExitClick = async () => {
         const success = await dispatch(exitUser());
-        if (success) {
+        if (success!) {
             navigate("/", { replace: true });
         }
     };

@@ -7,7 +7,6 @@ import { BrowserRouter } from "react-router-dom";
 import { closeIngredientModalAction } from "../../services/actions/modal";
 import { deleteSelectedIngredientToModal } from "../../services/actions/selectedIngredient";
 import { getIngredients } from "../../services/thunk/getIngredientsThunk";
-import { DispatchType } from "../../services/reducers/rootReducer";
 import { getUser } from "../../services/thunk/userThunk";
 
 import AppHeader from "../app-header/AppHeader";
@@ -21,9 +20,12 @@ import Profile from "../../pages/profile/Profile";
 import Register from "../../pages/register/Register";
 import ResetPassword from "../../pages/reset-password/ResetPassword";
 import ProtectedRouteElement from "../protected-route-component/ProtectedRouteElement";
+import Feed from "../../pages/feed/Feed";
+import SelectedOrder from "../order/selected-order/SelectedOrder";
+import { useAppDispatch } from "../../hooks/hooks";
 
 const App = () => {
-    const dispatch = useDispatch<DispatchType>();
+    const dispatch = useAppDispatch();
 
     //Запрос ингредиентов и пользователя из API
     useEffect(() => {
@@ -47,7 +49,10 @@ const App = () => {
         //Пути на страницы записаны в константы
 
         //Главная страница
-        const mainRoute = <Route path="/" element={<Main />}></Route>;
+        const mainRoute = <Route path="/" element={<Main />} />;
+
+        //Лента заказов
+        const feedRoute = <Route path="/feed" element={<Feed />} />;
 
         //Страница логина
         const loginRoute = (
@@ -112,7 +117,25 @@ const App = () => {
         const ordersRoute = (
             <Route
                 path="/profile/orders"
-                element={<ProtectedRouteElement element={<Profile />} />}
+                element={
+                    <ProtectedRouteElement
+                        background={background}
+                        element={<Profile />}
+                    />
+                }
+            />
+        );
+
+        //Страница информации заказа без модального окна
+        const orderRoute = (
+            <Route path="/feed/:number" element={<SelectedOrder />} />
+        );
+
+        //Страница информации заказа пользователя без модального окна
+        const userOrderRoute = (
+            <Route
+                path="/profile/orders/:number"
+                element={<ProtectedRouteElement element={<SelectedOrder />} />}
             />
         );
 
@@ -131,11 +154,39 @@ const App = () => {
             />
         );
 
+        const orderDetailsModalRoute = (
+            <Route
+                path="/feed/:number"
+                element={
+                    <Modal orderElement={true} onClose={closeModal}>
+                        <SelectedOrder />
+                    </Modal>
+                }
+            />
+        );
+
+        const userOrderModalRoute = (
+            <Route
+                path="/profile/orders/:number"
+                element={
+                    <ProtectedRouteElement
+                        background={background}
+                        element={
+                            <Modal orderElement={true} onClose={closeModal}>
+                                <SelectedOrder />
+                            </Modal>
+                        }
+                    />
+                }
+            />
+        );
+
         return (
             <>
                 <AppHeader />
                 <Routes location={background || location}>
                     {mainRoute}
+                    {feedRoute}
                     {ingredientDetailsRoute}
                     {loginRoute}
                     {registerRoute}
@@ -144,9 +195,19 @@ const App = () => {
                     {profileRoute}
                     {ordersRoute}
                     {notFound404Route}
+                    {orderRoute}
+                    {userOrderRoute}
                 </Routes>
 
-                {background && <Routes>{ingredientDetailsModalRoute}</Routes>}
+                {background && (
+                    <>
+                        <Routes>
+                            {ingredientDetailsModalRoute}
+                            {orderDetailsModalRoute}
+                            {userOrderModalRoute}
+                        </Routes>
+                    </>
+                )}
             </>
         );
     };

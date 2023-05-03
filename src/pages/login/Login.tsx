@@ -1,7 +1,6 @@
 //Компонент авторизации в приложение
 
 //Импорты
-import { useDispatch } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     TEXT_DEFAULT,
@@ -18,10 +17,10 @@ import {
 import styles from "./Login.module.css";
 import { useForm } from "../../hooks/useForm";
 import { sendLoginData } from "../../services/thunk/userThunk";
-import { DispatchType } from "../../services/reducers/rootReducer";
+import { useAppDispatch } from "../../hooks/hooks";
 
 const Login = () => {
-    const dispatch = useDispatch<DispatchType>();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const { values, handleChange } = useForm({ email: "", password: "" });
@@ -30,9 +29,9 @@ const Login = () => {
     const onSubmitForm = async (e: React.FormEvent) => {
         e.preventDefault();
         const success = await dispatch(
-            sendLoginData(values.email, values.password)
+            sendLoginData(values.email!, values.password!)
         );
-        if (success) {
+        if (success!) {
             navigate(location.state.from.pathname, { replace: true });
         }
     };

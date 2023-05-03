@@ -1,19 +1,20 @@
 //Компонент ингридиентов бургера, в этой секции расположены переключатели и список ингридиентов
 
+//Импорты
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
 import IngredientsList from "./ingredients-list/IngredientsList";
 import Tabs from "./tabs/Tabs";
 
 import { TEXT_LARGE } from "../../../utils/constants";
+import { useAppSelector } from "../../../hooks/hooks";
 
 const BurgerIngredients = () => {
     const [current, setСurrent] = useState("one");
 
     //Возвращаем секцию ингредиентов из хранилища (ingredientsData, isLoading, hasError)
-    const { ingredients } = useSelector((store: any) => ({
-        ingredients: store.ingredients,
+    const { ingredients } = useAppSelector((state) => ({
+        ingredients: state.ingredients,
     }));
 
     return (

@@ -11,7 +11,7 @@ import {
     DELETE_SELECTED_INGREDIENT,
     DELETE_SELECTED_INGREDIENTS,
     UPDATE_SELECTED_INGREDIENTS,
-} from "../../utils/constants";
+} from "./actionsTypes";
 
 //Типы экшенов
 type SelectedIngredientType = {

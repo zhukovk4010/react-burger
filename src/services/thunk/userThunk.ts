@@ -13,11 +13,13 @@ import {
 import { setUserDataAction } from "../actions/user";
 import { getCookie, setCookie } from "../../utils/cookie";
 import { deleteUserDataAction } from "../actions/user";
+import { AppThunk } from "../../types/types";
 
-export const getUser = () => {
+//Запрос пользователя
+export const getUser: AppThunk = () => {
     return async (dispatch) => {
         try {
-            const user = await getUserRequest({
+            let user = await getUserRequest({
                 method: "GET",
                 mode: "cors",
                 cache: "no-cache",
@@ -30,14 +32,12 @@ export const getUser = () => {
                 referrerPolicy: "no-referrer",
             });
             dispatch(setUserDataAction(user.user.email, user.user.name));
-        } catch (e) {
-            return null;
-        }
+        } catch (e: unknown) {}
     };
 };
 
 //Отправка email, для получения кода
-export const sendPasswordOnEmail = (email) => {
+export const sendPasswordOnEmail: AppThunk = (email: string) => {
     return async (dispatch) => {
         try {
             const res = await sendEmail({
@@ -48,8 +48,8 @@ export const sendPasswordOnEmail = (email) => {
                 body: JSON.stringify({ email: email }),
             });
             return res.success;
-        } catch (e) {
-            if (e) {
+        } catch (e: unknown) {
+            if (e instanceof Error) {
                 //Показываем ошибку
                 window.alert(e.message);
             }
@@ -58,7 +58,7 @@ export const sendPasswordOnEmail = (email) => {
 };
 
 //Отправка данных для авторизации
-export const sendLoginData = (email, password) => {
+export const sendLoginData: AppThunk = (email: string, password: string) => {
     return async (dispatch) => {
         try {
             const res = await sendUserLogin({
@@ -74,15 +74,17 @@ export const sendLoginData = (email, password) => {
             saveTokens(res.refreshToken, res.accessToken);
             dispatch(setUserDataAction(res.user.email, res.user.name));
             return res.success;
-        } catch (e) {
-            //Показываем пользователю ошибку
-            window.alert(e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                //Показываем пользователю ошибку
+                window.alert(e.message);
+            }
         }
     };
 };
 
 //Изменение пароля
-export const resetPassword = (newPassword, code) => {
+export const resetPassword: AppThunk = (newPassword: string, code: string) => {
     return async (dispatch) => {
         try {
             const res = await sendChangedPassword({
@@ -96,16 +98,21 @@ export const resetPassword = (newPassword, code) => {
                 }),
             });
             return res.success;
-        } catch (e) {
-            //Показываем ошибку
-            window.alert(e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                //Показываем ошибку
+                window.alert(e.message);
+            }
         }
     };
 };
 
 //Регистрация
-
-export const registerUser = (name, email, password) => {
+export const registerUser: AppThunk = (
+    name: string,
+    email: string,
+    password: string
+) => {
     return async (dispatch) => {
         try {
             const res = await sendUserRegister({
@@ -122,15 +129,22 @@ export const registerUser = (name, email, password) => {
             saveTokens(res.refreshToken, res.accessToken);
             dispatch(setUserDataAction(res.user.email, res.user.name));
             return res.success;
-        } catch (e) {
-            //Показываем пользователю ошибку
-            window.alert(e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                //Показываем пользователю ошибку
+                window.alert(e.message);
+            }
         }
     };
 };
 
-export const saveNewUserData = (name, email, password) => {
-    let newPassword;
+//Сохрание изменных данных о пользователе на странице профиля
+export const saveNewUserData: AppThunk = (
+    name: string,
+    email: string,
+    password: string
+) => {
+    let newPassword: string;
     if (password) {
         newPassword = password;
     }
@@ -154,15 +168,16 @@ export const saveNewUserData = (name, email, password) => {
                 referrerPolicy: "no-referrer",
             });
             dispatch(setUserDataAction(res.user.email, res.user.name));
-        } catch (e) {
-            window.alert(e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                window.alert(e.message);
+            }
         }
     };
 };
 
 //Выход пользователя из аккаунта
-
-export const exitUser = () => {
+export const exitUser: AppThunk = () => {
     return async (dispatch) => {
         try {
             const res = await userLogout({
@@ -179,8 +194,10 @@ export const exitUser = () => {
             setCookie("accessToken", null, { expires: -1 });
             localStorage.setItem("refreshToken", "");
             return res.success;
-        } catch (e) {
-            window.alert(e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                window.alert(e.message);
+            }
         }
     };
 };

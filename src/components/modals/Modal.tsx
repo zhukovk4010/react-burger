@@ -19,9 +19,10 @@ type ModalPropsType = {
     onClose: () => void;
     children: React.ReactNode;
     title?: string;
+    orderElement?: boolean;
 };
 
-const Modal = ({ onClose, children, title }: ModalPropsType) => {
+const Modal = ({ onClose, children, title, orderElement }: ModalPropsType) => {
     //Закрытие модального окна через Escape
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
@@ -38,12 +39,24 @@ const Modal = ({ onClose, children, title }: ModalPropsType) => {
             <ModalOverlay onClose={onClose} />
 
             <section className={styles.modal}>
-                <div className={styles.titleAndButton}>
-                    <h2 className={`${TEXT_LARGE} ${styles.title}`}>{title}</h2>
-                    <button onClick={onClose} className={styles.buttonClose}>
+                {orderElement ? ( //Параметр передается при открытии модалки заказа
+                    <div onClick={onClose} className={styles.orderButtonClose}>
                         <CloseIcon type="primary" />
-                    </button>
-                </div>
+                    </div>
+                ) : (
+                    <div className={styles.titleAndButton}>
+                        <h2 className={`${TEXT_LARGE} ${styles.title}`}>
+                            {title}
+                        </h2>
+                        <button
+                            onClick={onClose}
+                            className={styles.buttonClose}
+                        >
+                            <CloseIcon type="primary" />
+                        </button>
+                    </div>
+                )}
+
                 {children}
             </section>
         </>,
