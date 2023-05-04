@@ -5,7 +5,7 @@ import { SET_USER_DATA, DELETE_USER_DATA } from "../actions/actionsTypes";
 import { UserActionsTypes } from "../actions/user";
 
 //Тип состояния
-type InitialStateType = {
+export type InitialStateType = {
     name: string;
     email: string;
     isAuthenticated: boolean;

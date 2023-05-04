@@ -95,7 +95,11 @@ const IngredientElement = ({ ingredient }: IngredientElementPropsType) => {
             state={{ background: location }}
             onClick={() => openModal(ingredient)}
         >
-            <div style={{ opacity }} className={styles.ingredientsElement}>
+            <div
+                style={{ opacity }}
+                test-id="ingredient"
+                className={styles.ingredientsElement}
+            >
                 {activeCount && (
                     <Counter count={count} size="default" extraClass="m-1" />
                 )}

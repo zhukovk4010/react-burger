@@ -12,7 +12,7 @@ import {
 } from "../actions/actionsTypes";
 
 //Тип начального состояния
-type InitialStateType = {
+export type InitialStateType = {
     openIngredientDetailsModal: boolean;
     openOrderModal: boolean;
     openOrderDetailsModal: boolean;

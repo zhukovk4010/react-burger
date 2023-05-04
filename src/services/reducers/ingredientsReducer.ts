@@ -10,7 +10,7 @@ import {
 } from "../actions/actionsTypes";
 
 //Тип initialState
-type InitialStateType = {
+export type InitialStateType = {
     ingredientsData: Array<IngredientType>;
     isLoading: boolean;
     hasError: boolean;

@@ -9,7 +9,7 @@ import {
 import { OrdersTypes } from "./../actions/orders";
 //Редюсер заказов
 
-type InitialStateType = {
+export type InitialStateType = {
     wsStatus: string;
     orders: Array<WsOrderType>;
     totalOrders: number;

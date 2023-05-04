@@ -12,7 +12,7 @@ import {
 import { WsOrderType } from "../../types/types";
 
 //Тип состояния
-type InitialStateType = {
+export type InitialStateType = {
     orderData: WsOrderType | null;
     numberOrder: number;
     isLoading: boolean;

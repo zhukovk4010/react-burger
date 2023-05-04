@@ -18,7 +18,7 @@ type SelectedIngredientType = {
 };
 
 //Тип состояния
-type InitialStateType = {
+export type InitialStateType = {
     selectedIngredientsData: Array<SelectedIngredientType>;
     selectedBun: IngredientType | null;
 };

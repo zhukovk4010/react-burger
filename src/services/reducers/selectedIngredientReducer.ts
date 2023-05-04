@@ -10,7 +10,7 @@ import {
 } from "../actions/actionsTypes";
 
 //Тип состояния
-type InitialStateType = {
+export type InitialStateType = {
     selectedIngredient: IngredientType | null;
 };
 
