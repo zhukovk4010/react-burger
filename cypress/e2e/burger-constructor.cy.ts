@@ -2,7 +2,7 @@
 
 describe("user authentication and create order", () => {
     beforeEach(() => {
-        cy.visit("/");
+        cy.visit("http://localhost:3000/#/");
         cy.get('[test-id="ingredient"]').first().as("ingredient");
     });
 
@@ -13,7 +13,7 @@ describe("user authentication and create order", () => {
     });
 
     it("user authentication, drag and drop ingredients and create order", () => {
-        cy.visit("/login");
+        cy.visit("http://localhost:3000/#/login");
         cy.get('[name="email"]').type("zhukovk4010@gmail.com");
         cy.get('[name="password"]').type("zxc123");
         cy.get('[test-id="enterButton"]').click();
