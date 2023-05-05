@@ -10,14 +10,14 @@ import {
 } from "../actions/actionsTypes";
 
 //Тип initialState
-export type InitialStateType = {
+type InitialStateType = {
     ingredientsData: Array<IngredientType>;
     isLoading: boolean;
     hasError: boolean;
 };
 
 //Начальное состояние (список ингредиентов, состояние загрузки и наличие ошибки)
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     ingredientsData: [],
     isLoading: false,
     hasError: false,

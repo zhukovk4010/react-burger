@@ -18,13 +18,13 @@ type SelectedIngredientType = {
 };
 
 //Тип состояния
-export type InitialStateType = {
+type InitialStateType = {
     selectedIngredientsData: Array<SelectedIngredientType>;
     selectedBun: IngredientType | null;
 };
 
 //Начальное состояние
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     selectedIngredientsData: [],
     selectedBun: null,
 };

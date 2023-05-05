@@ -3,22 +3,31 @@ import {
     getIngredientsFailedAction,
     getIngredientsSuccessAction,
 } from "../actions/ingredients";
-import ingredientsReducer, { InitialStateType } from "./ingredientsReducer";
+import ingredientsReducer, { initialState } from "./ingredientsReducer";
 
 //Исходные данные
-const state: InitialStateType = {
-    ingredientsData: [],
-    isLoading: false,
-    hasError: false,
+export const ingredient = {
+    _id: "id",
+    name: "Ingredient",
+    type: "bun",
+    proteins: 100,
+    fat: 100,
+    carbohydrates: 100,
+    calories: 100,
+    price: 100,
+    image: "some link",
+    image_large: "some link",
+    image_mobile: "some link",
+    __v: 1,
 };
 
 describe("test ingredients reducer", () => {
     it("get ingredients action", () => {
         const action = getIngredientsAction();
-        const newState = ingredientsReducer(state, action);
+        const newState = ingredientsReducer(initialState, action);
 
         expect(newState).toEqual({
-            ...state,
+            ...initialState,
             isLoading: true,
             hasError: false,
         });
@@ -26,79 +35,21 @@ describe("test ingredients reducer", () => {
 
     it("get ingredients failed action", () => {
         const action = getIngredientsFailedAction();
-        const newState = ingredientsReducer(state, action);
+        const newState = ingredientsReducer(initialState, action);
 
         expect(newState).toEqual({
-            ...state,
+            ...initialState,
             isLoading: false,
             hasError: true,
         });
     });
 
     it("get ingredients success action", () => {
-        const action = getIngredientsSuccessAction([
-            {
-                _id: "id",
-                name: "Ingredient",
-                type: "bun",
-                proteins: 100,
-                fat: 100,
-                carbohydrates: 100,
-                calories: 100,
-                price: 100,
-                image: "some link",
-                image_large: "some link",
-                image_mobile: "some link",
-                __v: 1,
-            },
-            {
-                _id: "id",
-                name: "Ingredient",
-                type: "bun",
-                proteins: 100,
-                fat: 100,
-                carbohydrates: 100,
-                calories: 100,
-                price: 100,
-                image: "some link",
-                image_large: "some link",
-                image_mobile: "some link",
-                __v: 1,
-            },
-        ]);
-        const newState = ingredientsReducer(state, action);
+        const action = getIngredientsSuccessAction([ingredient, ingredient]);
+        const newState = ingredientsReducer(initialState, action);
         expect(newState).toEqual({
-            ...state,
-            ingredientsData: [
-                {
-                    _id: "id",
-                    name: "Ingredient",
-                    type: "bun",
-                    proteins: 100,
-                    fat: 100,
-                    carbohydrates: 100,
-                    calories: 100,
-                    price: 100,
-                    image: "some link",
-                    image_large: "some link",
-                    image_mobile: "some link",
-                    __v: 1,
-                },
-                {
-                    _id: "id",
-                    name: "Ingredient",
-                    type: "bun",
-                    proteins: 100,
-                    fat: 100,
-                    carbohydrates: 100,
-                    calories: 100,
-                    price: 100,
-                    image: "some link",
-                    image_large: "some link",
-                    image_mobile: "some link",
-                    __v: 1,
-                },
-            ],
+            ...initialState,
+            ingredientsData: [ingredient, ingredient],
             isLoading: false,
             hasError: false,
         });

@@ -10,12 +10,12 @@ import {
 } from "../actions/actionsTypes";
 
 //Тип состояния
-export type InitialStateType = {
+type InitialStateType = {
     selectedIngredient: IngredientType | null;
 };
 
 //Начальное состояние
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     selectedIngredient: null,
 };
 

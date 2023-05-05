@@ -9,7 +9,7 @@ import {
 import { OrdersTypes } from "./../actions/orders";
 //Редюсер заказов
 
-export type InitialStateType = {
+type InitialStateType = {
     wsStatus: string;
     orders: Array<WsOrderType>;
     totalOrders: number;
@@ -17,7 +17,7 @@ export type InitialStateType = {
     error?: Event;
 };
 
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     wsStatus: "OFFLINE",
     orders: [],
     totalOrders: 0,

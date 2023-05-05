@@ -12,14 +12,14 @@ import {
 } from "../actions/actionsTypes";
 
 //Тип начального состояния
-export type InitialStateType = {
+type InitialStateType = {
     openIngredientDetailsModal: boolean;
     openOrderModal: boolean;
     openOrderDetailsModal: boolean;
 };
 
 //Начальное состояние
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     openIngredientDetailsModal: false,
     openOrderModal: false,
     openOrderDetailsModal: false,

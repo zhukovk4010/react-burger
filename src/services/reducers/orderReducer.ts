@@ -12,7 +12,7 @@ import {
 import { WsOrderType } from "../../types/types";
 
 //Тип состояния
-export type InitialStateType = {
+type InitialStateType = {
     orderData: WsOrderType | null;
     numberOrder: number;
     isLoading: boolean;
@@ -21,7 +21,7 @@ export type InitialStateType = {
 };
 
 //Начальное состояние
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     orderData: null,
     numberOrder: 0,
     isLoading: false,
