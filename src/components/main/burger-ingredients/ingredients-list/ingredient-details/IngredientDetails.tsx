@@ -32,7 +32,7 @@ const IngredientDetails = () => {
     }
 
     return (
-        <section className={styles.container}>
+        <section className={styles.container} test-id="ingredientDetails">
             {background ? (
                 ""
             ) : (

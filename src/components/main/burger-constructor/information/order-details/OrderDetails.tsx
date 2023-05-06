@@ -17,7 +17,7 @@ type OrderDetailsPropsType = {
 
 const OrderDetails = ({ orderNumber }: OrderDetailsPropsType) => {
     return (
-        <div className={styles.orderDetails}>
+        <div className={styles.orderDetails} test-id="orderDetails">
             <p className={`${DIGITS_LARGE} ${styles.numberOrder}`}>
                 {orderNumber}
             </p>

@@ -12,7 +12,7 @@ type InitialStateType = {
 };
 
 //Начальное состояние
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     name: "",
     email: "",
     isAuthenticated: false,

@@ -40,7 +40,11 @@ const Modal = ({ onClose, children, title, orderElement }: ModalPropsType) => {
 
             <section className={styles.modal}>
                 {orderElement ? ( //Параметр передается при открытии модалки заказа
-                    <div onClick={onClose} className={styles.orderButtonClose}>
+                    <div
+                        test-id="closeButton"
+                        onClick={onClose}
+                        className={styles.orderButtonClose}
+                    >
                         <CloseIcon type="primary" />
                     </div>
                 ) : (
@@ -49,6 +53,7 @@ const Modal = ({ onClose, children, title, orderElement }: ModalPropsType) => {
                             {title}
                         </h2>
                         <button
+                            test-id="closeButton"
                             onClick={onClose}
                             className={styles.buttonClose}
                         >

@@ -21,7 +21,7 @@ type InitialStateType = {
 };
 
 //Начальное состояние
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     orderData: null,
     numberOrder: 0,
     isLoading: false,

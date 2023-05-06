@@ -1,7 +1,7 @@
 //Компонент авторизации в приложение
 
 //Импорты
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
     TEXT_DEFAULT,
     TEXT_INACTIVE_COLOR,
@@ -22,7 +22,6 @@ import { useAppDispatch } from "../../hooks/hooks";
 const Login = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const location = useLocation();
     const { values, handleChange } = useForm({ email: "", password: "" });
 
     //Отправка формы на сервер
@@ -32,7 +31,7 @@ const Login = () => {
             sendLoginData(values.email!, values.password!)
         );
         if (success!) {
-            navigate(location.state.from.pathname, { replace: true });
+            navigate("/", { replace: true });
         }
     };
 
@@ -54,7 +53,7 @@ const Login = () => {
                     onChange={handleChange}
                     extraClass="mt-6"
                 />
-                <div className={styles.buttonContainer}>
+                <div className={styles.buttonContainer} test-id="enterButton">
                     <Button htmlType="submit" type="primary" size="large">
                         Вход
                     </Button>

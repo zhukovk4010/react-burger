@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation, useNavigate } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 
 import { closeIngredientModalAction } from "../../services/actions/modal";
 import { deleteSelectedIngredientToModal } from "../../services/actions/selectedIngredient";
@@ -213,9 +213,9 @@ const App = () => {
     };
 
     return (
-        <BrowserRouter>
+        <HashRouter>
             <ModalSwitch />
-        </BrowserRouter>
+        </HashRouter>
     );
 };
 

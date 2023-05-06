@@ -17,7 +17,7 @@ type InitialStateType = {
     error?: Event;
 };
 
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     wsStatus: "OFFLINE",
     orders: [],
     totalOrders: 0,

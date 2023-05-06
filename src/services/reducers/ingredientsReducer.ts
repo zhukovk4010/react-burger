@@ -17,7 +17,7 @@ type InitialStateType = {
 };
 
 //Начальное состояние (список ингредиентов, состояние загрузки и наличие ошибки)
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     ingredientsData: [],
     isLoading: false,
     hasError: false,

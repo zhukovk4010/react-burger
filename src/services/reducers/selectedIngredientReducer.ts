@@ -15,7 +15,7 @@ type InitialStateType = {
 };
 
 //Начальное состояние
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     selectedIngredient: null,
 };
 

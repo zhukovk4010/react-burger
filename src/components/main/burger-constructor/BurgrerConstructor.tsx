@@ -85,6 +85,7 @@ const BurgerConstructor = () => {
     return (
         <section className="mt-25">
             <section
+                test-id="dropTarget"
                 ref={dropTargerRef}
                 className={`${styles.burgerConstructor} ${
                     isHover ? styles.onHover : ""

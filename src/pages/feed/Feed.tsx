@@ -13,8 +13,11 @@ const Feed = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
+        const wsOpen = () => {
+            dispatch(wsConnect(WS_URL));
+        };
         //Открытие соединения
-        dispatch(wsConnect(WS_URL));
+        setTimeout(wsOpen, 500);
 
         //Закрытие соединения
         return () => {

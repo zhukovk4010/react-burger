@@ -19,7 +19,7 @@ type InitialStateType = {
 };
 
 //Начальное состояние
-const initialState: InitialStateType = {
+export const initialState: InitialStateType = {
     openIngredientDetailsModal: false,
     openOrderModal: false,
     openOrderDetailsModal: false,

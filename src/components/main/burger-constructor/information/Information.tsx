@@ -94,6 +94,7 @@ const Information = ({ totalPrice }: InformationPropsTypes) => {
             </div>
             {selectedIngredients.selectedBun ? (
                 <Button
+                    test-id="orderButton"
                     onClick={createOrder}
                     htmlType="button"
                     type="primary"
